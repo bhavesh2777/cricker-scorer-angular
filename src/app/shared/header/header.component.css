@@ -1,0 +1,37 @@
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-infix {
+  border-top: none;
+  padding: 12px 0;
+  top: 1.5px;
+}
+
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-prefix,
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-suffix {
+  top: 7px;
+}
+
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  background-color: #fff;
+}
+
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-outline-start,
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-outline-end {
+  border: none;
+}
+
+::ng-deep
+  .header-search.mat-form-field-appearance-outline
+  .mat-form-field-wrapper {
+  padding-bottom: 0;
+}

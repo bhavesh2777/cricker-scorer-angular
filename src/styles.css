@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Themes */
+@layer base {
+  :root {
+    --sidenav-bg-primary: #181818;
+    --sidenav-bg-muted: #282828;
+    --sidenav-text-primary: #b8b8b8;
+    --sidenav-text-muted: #32cd32;
+    --main-bg-primary: #d0d0d0;
+    --main-text-primary: #505050;
+  }
+}
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.sidenav-tab {
+  @apply flex items-center gap-1.5 my-2 hover:text-skin-sidenav-muted hover:cursor-pointer;
+}
+
+.sidenav-active {
+  @apply text-skin-sidenav-muted;
+}
