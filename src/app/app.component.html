@@ -1,4 +1,9 @@
-<p>hello wold</p>
-<div class="flex justify-center">
-  <button mat-raised-button color="warn">Warn</button>
+<div class="flex h-screen w-screen">
+  <div class="bg-skin-sidenav-primary min-w-[276px]">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="w-full">
+    <div>Header</div>
+    <router-outlet></router-outlet>
+  </div>
 </div>
