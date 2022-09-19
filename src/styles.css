@@ -9,6 +9,8 @@
     --sidenav-bg-muted: #282828;
     --sidenav-text-primary: #b8b8b8;
     --sidenav-text-muted: #32cd32;
+    --main-bg-primary: #d0d0d0;
+    --main-text-primary: #505050;
   }
 }
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
@@ -23,4 +25,8 @@ body {
 
 .sidenav-tab {
   @apply flex items-center gap-1.5 my-2 hover:text-skin-sidenav-muted hover:cursor-pointer;
+}
+
+.sidenav-active {
+  @apply text-skin-sidenav-muted;
 }

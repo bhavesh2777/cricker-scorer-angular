@@ -1,0 +1,15 @@
+<div class="flex items-center p-5">
+  <div class="flex items-center gap-1.5 mr-5 w-[350px]">
+    <mat-icon>access_time</mat-icon>
+    {{ now | date: "medium" }}
+  </div>
+  <div class="w-full">
+    <mat-form-field class="w-full header-search" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput type="text" [(ngModel)]="value" placeholder="Search" />
+      <button *ngIf="value" matSuffix mat-icon-button (click)="value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>

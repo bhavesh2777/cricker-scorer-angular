@@ -4,12 +4,14 @@ const extendedTheme = {
     skin: {
       "sidenav-primary": "var(--sidenav-text-primary)",
       "sidenav-muted": "var(--sidenav-text-muted)",
+      "main-primary": "var(--main-text-primary)",
     },
   },
   backgroundColor: {
     skin: {
       "sidenav-primary": "var(--sidenav-bg-primary)",
       "sidenav-muted": "var(--sidenav-bg-muted)",
+      "main-primary": "var(--main-bg-primary)",
     },
   },
 };
