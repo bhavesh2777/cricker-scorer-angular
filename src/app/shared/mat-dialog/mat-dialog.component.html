@@ -1,0 +1,43 @@
+<!-- Add player dialog -->
+<div *ngIf="data.dType == 'add-player'">
+  <div class="flex justify-between p-4">
+    <div class="text-xl">Add Player</div>
+    <button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="flex gap-5 p-4">
+    <div>
+      <label for="file">
+        <img class="w-9" src="assets/main_logo.jpg" alt="" />
+      </label>
+      <input
+        type="file"
+        id="file"
+        (change)="uploadPlayerImg($event.target.files)"
+        hidden
+      />
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          placeholder="Enter player name"
+          type="text"
+          [(ngModel)]="enteredName"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<!-- Add team dialog -->
+<div *ngIf="data.dType == 'add-team'">Add team</div>
+
+<!-- Player edit dialog -->
+<div *ngIf="data.dType == 'player-edit'">
+  Player {{ data?.isDelete == true ? "Delete" : "Edit" }}
+</div>
+
+<!-- Player Detail dialog -->
+<div *ngIf="data.dType == 'player-details'">Player details</div>

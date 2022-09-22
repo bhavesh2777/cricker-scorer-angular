@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamDetailComponent } from './team-detail.component';
+import { MatDialogComponent } from './mat-dialog.component';
 
-describe('TeamDetailComponent', () => {
-  let component: TeamDetailComponent;
-  let fixture: ComponentFixture<TeamDetailComponent>;
+describe('MatDialogComponent', () => {
+  let component: MatDialogComponent;
+  let fixture: ComponentFixture<MatDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TeamDetailComponent ]
+      declarations: [ MatDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamDetailComponent);
+    fixture = TestBed.createComponent(MatDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

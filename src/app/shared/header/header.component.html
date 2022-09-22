@@ -1,15 +1,46 @@
-<div class="flex items-center p-5">
-  <div class="flex items-center gap-1.5 mr-5 w-[350px]">
+<div class="flex items-center p-5 gap-4">
+  <div class="flex items-center gap-1.5 min-w-fit">
     <mat-icon>access_time</mat-icon>
-    {{ now | date: "medium" }}
+    {{ nowTime | date: "medium" }}
   </div>
   <div class="w-full">
     <mat-form-field class="w-full header-search" appearance="outline">
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput type="text" [(ngModel)]="value" placeholder="Search" />
-      <button *ngIf="value" matSuffix mat-icon-button (click)="value = ''">
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchValue"
+        placeholder="Search"
+      />
+      <button
+        *ngIf="searchValue"
+        matSuffix
+        mat-icon-button
+        (click)="searchValue = ''"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
   </div>
+
+  <div class="ml-8 hover:cursor-pointer" matTooltip="Save">
+    <mat-icon>save</mat-icon>
+  </div>
+  <div class="hover:cursor-pointer" matTooltip="Refresh">
+    <mat-icon>refresh</mat-icon>
+  </div>
+  <button
+    (click)="addPlayer()"
+    class="hover:cursor-pointer"
+    matTooltip="Player add"
+  >
+    <mat-icon>person_add</mat-icon>
+  </button>
+  <button
+    (click)="addTeam()"
+    class="mr-8 hover:cursor-pointer"
+    matTooltip="Team add"
+  >
+    <mat-icon>group_add</mat-icon>
+  </button>
 </div>
