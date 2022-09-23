@@ -12,6 +12,7 @@ import { MatchHistoryComponent } from './pages/match-history/match-history.compo
 import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { SmallCardComponent } from './shared/small-card/small-card.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -21,6 +22,9 @@ import { TeamListCardComponent } from './pages/teams/team-list-card/team-list-ca
 import { PlayerListCardComponent } from './pages/teams/player-list-card/player-list-card.component';
 import { MatDialogComponent } from './shared/mat-dialog/mat-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     TeamListCardComponent,
     PlayerListCardComponent,
     MatDialogComponent,
+    SmallCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,
     MatTooltipModule,
     MatDialogModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

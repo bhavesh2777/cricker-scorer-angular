@@ -8,8 +8,11 @@ import { DialogType } from 'src/app/models/common-dialog.model';
   styleUrls: ['./mat-dialog.component.css'],
 })
 export class MatDialogComponent implements OnInit {
-  enteredName = '';
+  enteredPlayerName = '';
+  enteredTeamName = '';
   playerFile: File | null = null;
+  teamFile: File | null = null;
+
   constructor(
     public dialogRef: MatDialogRef<MatDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogType
@@ -21,5 +24,9 @@ export class MatDialogComponent implements OnInit {
 
   uploadPlayerImg(files: FileList) {
     this.playerFile = files?.item(0);
+  }
+
+  uploadTeamImg(files: FileList) {
+    this.teamFile = files?.item(0);
   }
 }

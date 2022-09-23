@@ -14,7 +14,7 @@ export class PlayerListCardComponent implements OnInit {
 
   playerDetails(): void {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '250px',
+      width: 'max-content',
       data: { dType: 'player-details' },
     });
 
@@ -25,7 +25,7 @@ export class PlayerListCardComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: { dType: 'player-edit', isDelete },
     });
     dialogRef.afterClosed().subscribe((result) => {});

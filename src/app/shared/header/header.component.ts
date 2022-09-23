@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
   addTeam(): void {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: { dType: 'add-team' },
     });
 
