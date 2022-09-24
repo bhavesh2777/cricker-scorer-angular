@@ -42,3 +42,8 @@ body {
 .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
   background-color: rgba(50, 205, 50, 0.26);
 }
+
+.dialog-common {
+  overflow: auto;
+  max-height: 90%;
+}

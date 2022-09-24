@@ -1,0 +1,73 @@
+<div>
+  <!-- Batting scores -->
+  <table mat-table [dataSource]="battingDataSource" class="scorer-table w-full">
+    <ng-container
+      *ngFor="let column of battingColumns"
+      [matColumnDef]="column.columnDef"
+    >
+      <th mat-header-cell *matHeaderCellDef>
+        {{ column.header }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <div>
+          {{ column.cell(row) }}
+        </div>
+        <div
+          class="text-xs text-gray-500"
+          *ngIf="column.columnDef == 'batsman' && true"
+        >
+          not out
+        </div>
+        <div
+          class="text-xs text-gray-500"
+          *ngIf="column.columnDef == 'batsman' && false"
+        >
+          out details
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Extra column -->
+    <ng-container matColumnDef="extras">
+      <td mat-footer-cell *matFooterCellDef colspan="6">
+        <div class="flex justify-between">
+          <div>Extras</div>
+          <div>1 LB, 1 WD, 0 NB</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Total Score column -->
+    <ng-container matColumnDef="totalScore">
+      <td mat-footer-cell *matFooterCellDef colspan="6">
+        <div class="flex justify-between">
+          <div>Toal</div>
+          <div>70-0 (50.0) 14.00 RR</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="battingDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: battingDisplayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="['extras']"></tr>
+    <tr mat-footer-row *matFooterRowDef="['totalScore']"></tr>
+  </table>
+
+  <!-- Bowling scores -->
+  <table mat-table [dataSource]="bowlingDataSource" class="scorer-table w-full">
+    <ng-container
+      *ngFor="let column of bowlingColumns"
+      [matColumnDef]="column.columnDef"
+    >
+      <th mat-header-cell *matHeaderCellDef>
+        {{ column.header }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ column.cell(row) }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="bowlingDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: bowlingDisplayedColumns"></tr>
+  </table>
+</div>

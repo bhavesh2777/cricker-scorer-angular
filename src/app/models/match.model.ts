@@ -7,6 +7,24 @@ export enum matchStatusType {
   Inactive = 'Inactive',
 }
 
+export interface BattingElements {
+  batsman: string;
+  runs: number;
+  balls: number;
+  fours: number;
+  sixes: number;
+  strikeRate: number;
+}
+
+export interface BowlingElements {
+  bowler: string;
+  overs: number;
+  maidens: number;
+  runs: number;
+  wickets: number;
+  economyRate: number;
+}
+
 export class AdvancedSettings {
   static playersPerTeam = 11;
   static isNoBallAllowed = true;

@@ -25,6 +25,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { ScoreboardComponent } from './shared/scoreboard/scoreboard.component';
+import { OversComponent } from './shared/overs/overs.component';
+import { ScoreTableComponent } from './shared/scoreboard/score-table/score-table.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +46,9 @@ import { MatRadioModule } from '@angular/material/radio';
     PlayerListCardComponent,
     MatDialogComponent,
     SmallCardComponent,
+    ScoreboardComponent,
+    OversComponent,
+    ScoreTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +63,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatSelectModule,
     MatTabsModule,
     MatRadioModule,
+    MatSlideToggleModule,
+    MatExpansionModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

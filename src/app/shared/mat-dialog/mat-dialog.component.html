@@ -288,3 +288,22 @@
     </mat-tab-group>
   </div>
 </div>
+
+<!-- Full Scoreboard dialog -->
+<div *ngIf="data.dType == 'full-scoreboard'">
+  <div class="flex justify-between">
+    <div></div>
+    <div class="text-base text-center font-semibold ml-3">Team1 vs Team2</div>
+    <button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="my-3">
+    <mat-tab-group>
+      <mat-tab label="Scoreboard">
+        <app-scoreboard></app-scoreboard>
+      </mat-tab>
+      <mat-tab label="Overs"> <app-overs></app-overs> </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

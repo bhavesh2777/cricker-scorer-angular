@@ -1,0 +1,15 @@
+::ng-deep .scorer-table th.mat-header-cell:last-of-type {
+  width: 70px;
+  text-align: end;
+}
+
+.scorer-table tr.mat-header-row {
+  background-color: #d0d0d0;
+  height: 40px;
+}
+
+.scorer-table th.mat-header-cell,
+.scorer-table td.mat-cell,
+.scorer-table td.mat-footer-cell {
+  font-size: 13px;
+}
