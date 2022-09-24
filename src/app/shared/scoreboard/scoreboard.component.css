@@ -1,0 +1,25 @@
+.scorer-header {
+  background: #32cd32 !important;
+}
+.scorer-header:hover {
+  background: #32cd32 !important;
+}
+
+.scorer-header.mat-expanded {
+  height: 48px;
+}
+
+::ng-deep .scorer-header .mat-expansion-indicator::after {
+  position: absolute;
+  top: -5px;
+}
+
+::ng-deep .scorer-header.mat-expanded .mat-expansion-indicator::after {
+  position: absolute;
+  top: -5px;
+  right: 0;
+}
+
+::ng-deep .score-main-panel .mat-expansion-panel-body {
+  padding: 0;
+}

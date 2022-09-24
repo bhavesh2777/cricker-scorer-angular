@@ -1,0 +1,48 @@
+::ng-deep .dialog-input.mat-form-field-appearance-outline .mat-form-field-infix,
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-infix {
+  border-top: none;
+  padding: 12px 0;
+  top: 1.5px;
+}
+
+::ng-deep
+  .dialog-input.mat-form-field-appearance-outline
+  .mat-form-field-prefix,
+::ng-deep
+  .dialog-input.mat-form-field-appearance-outline
+  .mat-form-field-suffix {
+  top: 7px;
+}
+
+::ng-deep
+  .dialog-input.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  background-color: #fff;
+}
+
+::ng-deep
+  .dialog-input.mat-form-field-appearance-outline
+  .mat-form-field-outline-start,
+::ng-deep
+  .dialog-input.mat-form-field-appearance-outline
+  .mat-form-field-outline-end,
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-outline-start,
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-outline-end {
+  border: none;
+}
+
+::ng-deep
+  .dialog-input.mat-form-field-appearance-outline
+  .mat-form-field-wrapper,
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-wrapper {
+  padding-bottom: 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

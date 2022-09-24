@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -6,13 +8,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  now: number;
-  value = '';
-  constructor() {
+  nowTime: number;
+  searchValue = '';
+  constructor(public dialog: MatDialog) {
     setInterval(() => {
-      this.now = Date.now();
+      this.nowTime = Date.now();
     }, 1);
   }
 
   ngOnInit(): void {}
+
+  addPlayer(): void {
+    const dialogRef = this.dialog.open(MatDialogComponent, {
+      width: '450px',
+      data: { dType: 'add-player' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  addTeam(): void {
+    const dialogRef = this.dialog.open(MatDialogComponent, {
+      width: '450px',
+      data: { dType: 'add-team' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
 }

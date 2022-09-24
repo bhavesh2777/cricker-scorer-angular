@@ -1,0 +1,33 @@
+<div
+  class="flex gap-3 items-center p-2 border rounded-lg shadow-[0px_3px_8px_rgba(0,0,0,0.24)] ease-out duration-500 hover:cursor-pointer hover:shadow-[0px_3px_8px_rgba(0,0,0,0.54)]"
+>
+  <div class="flex items-center">
+    <img
+      class="w-9 border border-[#505050] rounded-full"
+      src="assets/main_logo.jpg"
+      alt=""
+    />
+  </div>
+  <div class="flex flex-col">
+    <div class="font-semibold">Team name</div>
+    <div class="flex gap-2 text-xs">
+      <div>Matches : 2</div>
+      <div>Won : 1</div>
+      <div>Lost : 1</div>
+    </div>
+  </div>
+  <div class="flex gap-2 h-max">
+    <button
+      (click)="editTeam($event)"
+      class="flex items-center p-1 ease-out duration-500 hover:bg-gray-300 hover:rounded-full"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      (click)="editTeam($event, true)"
+      class="flex items-center p-1 ease-out duration-500 hover:bg-gray-300 hover:rounded-full"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

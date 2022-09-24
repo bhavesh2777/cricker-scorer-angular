@@ -1,1 +1,24 @@
-<p>teams works!</p>
+<div class="flex gap-10 p-5">
+  <div class="min-w-[300px]">
+    <div class="text-xl font-semibold mb-5 ml-3">Teams</div>
+    <div class="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md relative">
+      <div
+        class="w-0 absolute h-0 border-t-[10px] border-t-transparent border-l-[20px] border-l-white border-b-[10px] border-b-transparent right-[-20px]"
+      ></div>
+      <app-team-list-card></app-team-list-card>
+      <app-team-list-card></app-team-list-card>
+      <app-team-list-card></app-team-list-card>
+    </div>
+  </div>
+  <div class="w-3/6">
+    <div class="text-xl font-semibold mb-5 ml-3">Players</div>
+    <div class="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md">
+      <app-player-list-card></app-player-list-card>
+      <app-player-list-card></app-player-list-card>
+      <app-player-list-card></app-player-list-card>
+      <app-player-list-card></app-player-list-card>
+      <app-player-list-card></app-player-list-card>
+      <app-player-list-card></app-player-list-card>
+    </div>
+  </div>
+</div>

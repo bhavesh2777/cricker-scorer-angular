@@ -3,22 +3,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogComponent } from 'src/app/shared/mat-dialog/mat-dialog.component';
 
 @Component({
-  selector: 'app-active-match',
-  templateUrl: './active-match.component.html',
-  styleUrls: ['./active-match.component.css'],
+  selector: 'app-team-list-card',
+  templateUrl: './team-list-card.component.html',
+  styleUrls: ['./team-list-card.component.css'],
 })
-export class ActiveMatchComponent implements OnInit {
+export class TeamListCardComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
-  viewFullScoreboard() {
+  editTeam(event: any, isDelete = false) {
+    event.stopPropagation();
+    event.preventDefault();
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '60%',
-      data: { dType: 'full-scoreboard' },
-      panelClass: 'dialog-common',
+      width: '450px',
+      data: { dType: 'team-edit', isDelete },
     });
-
     dialogRef.afterClosed().subscribe((result) => {});
   }
 }

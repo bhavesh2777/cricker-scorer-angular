@@ -30,3 +30,20 @@ body {
 .sidenav-active {
   @apply text-skin-sidenav-muted;
 }
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: rgb(50, 205, 50);
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: rgb(50, 205, 50);
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: rgba(50, 205, 50, 0.26);
+}
+
+.dialog-common {
+  overflow: auto;
+  max-height: 90%;
+}

@@ -1,0 +1,18 @@
+<div>
+  <div class="text-sm px-5 py-3 bg-gray-200">
+    Team 1 won the toss and opted to Bat first.
+  </div>
+  <div class="mb-3" *ngFor="let item of inningData">
+    <mat-accordion>
+      <mat-expansion-panel class="score-main-panel">
+        <mat-expansion-panel-header class="scorer-header">
+          <mat-panel-title class="text-white"> Team1 </mat-panel-title>
+          <mat-panel-description class="flex justify-end text-white">
+            70-0 (5.0)
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-score-table></app-score-table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
