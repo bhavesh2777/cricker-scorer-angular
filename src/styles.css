@@ -31,6 +31,18 @@ body {
   @apply text-skin-sidenav-muted;
 }
 
+.run-score-num {
+  @apply flex justify-center items-center border-2 border-[#32cd32] rounded-full w-10 h-10;
+}
+
+.gray-button-main {
+  @apply w-full text-center px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500;
+}
+
+.gray-text-main {
+  @apply font-normal text-xs text-gray-500;
+}
+
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
   background-color: rgb(50, 205, 50);
 }

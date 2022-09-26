@@ -10,6 +10,8 @@ import { DialogType } from 'src/app/models/common-dialog.model';
 export class MatDialogComponent implements OnInit {
   enteredPlayerName = '';
   enteredTeamName = '';
+  nextBowler = '';
+  replacedBatsman = '';
   playerFile: File | null = null;
   teamFile: File | null = null;
 

@@ -1,0 +1,37 @@
+<div
+  class="flex flex-col gap-1.5 p-2 border rounded-lg shadow-[0px_3px_8px_rgba(0,0,0,0.24)] ease-out duration-500 hover:shadow-[0px_3px_8px_rgba(0,0,0,0.54)]"
+>
+  <div class="flex gray-text-main">18/09/2022 - 03:43 PM</div>
+  <div class="my-1 font-medium">
+    <div class="flex justify-between items-center">
+      <div class="flex gap-2 items-center">
+        <img class="w-9" src="assets/main_logo.jpg" alt="" /> Team1
+      </div>
+      <div>
+        70-0
+        <span class="gray-text-main"> (5.0)</span>
+      </div>
+    </div>
+    <div class="flex justify-between items-center">
+      <div class="flex gap-2 items-center">
+        <img class="w-9" src="assets/main_logo.jpg" alt="" />Team2
+      </div>
+      <div>
+        70-0
+        <span class="gray-text-main"> (5.0)</span>
+      </div>
+    </div>
+  </div>
+  <div class="font-normal text-sm text-gray-500">
+    Team1 won the toss and opted to Bat first.
+  </div>
+  <div class="flex font-medium gap-4 justify-between items-center">
+    <button class="gray-button-main" routerLink="/active-match">Resume</button>
+    <button class="gray-button-main" (click)="viewFullScoreboard()">
+      Scoreboard
+    </button>
+    <button class="gray-button-main" (click)="deleteMatch()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

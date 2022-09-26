@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./overs.component.css'],
 })
 export class OversComponent implements OnInit {
-  oversArray = [{}, {}];
+  oversArray = [{}];
   constructor() {}
 
   ngOnInit(): void {}
