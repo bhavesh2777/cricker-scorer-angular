@@ -18,25 +18,9 @@ const BATTING_ELEMENT_DATA: BattingElements[] = [
     sixes: 2,
     strikeRate: 164.24,
   },
-  {
-    batsman: 'Player 1',
-    runs: 10,
-    balls: 10,
-    fours: 1,
-    sixes: 2,
-    strikeRate: 164.24,
-  },
 ];
 
 const BOWLING_ELEMENT_DATA: BowlingElements[] = [
-  {
-    bowler: 'Player 1',
-    overs: 10,
-    maidens: 10,
-    runs: 1,
-    wickets: 2,
-    economyRate: 164.24,
-  },
   {
     bowler: 'Player 1',
     overs: 10,

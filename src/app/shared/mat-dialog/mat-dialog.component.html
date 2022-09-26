@@ -174,7 +174,7 @@
     >
       Cancel
     </button>
-    <button class="bg-[#32cd32] px-5 py-2 rounded">Save</button>
+    <button class="bg-[#32cd32] px-5 py-2 rounded">Yes</button>
   </div>
 </div>
 
@@ -244,6 +244,97 @@
     >
       Cancel
     </button>
+    <button class="bg-[#32cd32] px-5 py-2 rounded">Yes</button>
+  </div>
+</div>
+
+<!-- Delete-match dialog -->
+<div *ngIf="data.dType == 'delete-match'">
+  <div class="flex justify-between">
+    <div class="text-xl">Delete match?</div>
+    <button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="my-3">
+    Are you sure you want to delete this match? All the player statistics
+    associated with this match will also be deleted.
+  </div>
+  <div class="flex gap-4 justify-end items-center">
+    <button
+      [mat-dialog-close]="false"
+      class="px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500"
+    >
+      Cancel
+    </button>
+    <button class="bg-[#32cd32] px-5 py-2 rounded">Yes</button>
+  </div>
+</div>
+
+<!-- Next-bowler dialog -->
+<div *ngIf="data.dType == 'next-bowler'">
+  <div class="flex justify-between">
+    <div class="text-xl">Choose next bowler</div>
+    <button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="w-3/4 flex justify-center items-center m-auto my-4">
+    <mat-form-field class="w-full dialog-input" appearance="outline">
+      <input
+        matInput
+        placeholder="Select next bowler"
+        type="text"
+        [(ngModel)]="nextBowler"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="flex gap-4 justify-end items-center">
+    <button
+      [mat-dialog-close]="false"
+      class="px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500"
+    >
+      Cancel
+    </button>
+    <button class="bg-[#32cd32] px-5 py-2 rounded">Save</button>
+  </div>
+</div>
+
+<!-- Retire-batsman dialog -->
+<div *ngIf="data.dType == 'retire-batsman'">
+  <div class="flex justify-between">
+    <div class="text-xl font-medium">Retire batsman?</div>
+    <button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="w-3/4 flex flex-col m-auto my-4">
+    <div class="text-base font-medium ml-3 mb-1">Select player to retire</div>
+    <mat-radio-group class="flex flex-col gap-1 ml-3 mb-3 common-input">
+      <mat-radio-button value="1">Player1</mat-radio-button>
+      <mat-radio-button value="2">Player2</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="w-full dialog-input" appearance="outline">
+      <input
+        matInput
+        placeholder="Replaced by?"
+        type="text"
+        [(ngModel)]="replacedBatsman"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="flex gap-4 justify-end items-center">
+    <button
+      [mat-dialog-close]="false"
+      class="px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500"
+    >
+      Cancel
+    </button>
     <button class="bg-[#32cd32] px-5 py-2 rounded">Save</button>
   </div>
 </div>
@@ -304,6 +395,10 @@
         <app-scoreboard></app-scoreboard>
       </mat-tab>
       <mat-tab label="Overs"> <app-overs></app-overs> </mat-tab>
+      <mat-tab label="Partnerships">
+        <app-partnerships></app-partnerships>
+      </mat-tab>
+      <mat-tab label="Analytics"> <app-analytics></app-analytics> </mat-tab>
     </mat-tab-group>
   </div>
 </div>
