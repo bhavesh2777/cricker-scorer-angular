@@ -13,6 +13,7 @@
 >
   <a
     class="sidenav-tab"
+    (click)="sideNavToggle()"
     routerLink="/new-match"
     routerLinkActive="sidenav-active"
   >
@@ -20,16 +21,22 @@
     New Match
   </a>
   <a
+    (click)="sideNavToggle()"
     class="sidenav-tab"
     routerLink="/active-match"
     routerLinkActive="sidenav-active"
   >
     <mat-icon>play_circle_filled</mat-icon> Active Match
   </a>
-  <a class="sidenav-tab" routerLink="/teams" routerLinkActive="sidenav-active"
+  <a
+    (click)="sideNavToggle()"
+    class="sidenav-tab"
+    routerLink="/teams"
+    routerLinkActive="sidenav-active"
     ><mat-icon>group</mat-icon> Teams</a
   >
   <a
+    (click)="sideNavToggle()"
     class="sidenav-tab"
     routerLink="/match-history"
     routerLinkActive="sidenav-active"
@@ -37,6 +44,7 @@
     <mat-icon>history</mat-icon>Match History
   </a>
   <a
+    (click)="sideNavToggle()"
     class="sidenav-tab"
     routerLink="/settings"
     routerLinkActive="sidenav-active"

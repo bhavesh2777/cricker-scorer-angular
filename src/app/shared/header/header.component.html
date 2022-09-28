@@ -1,4 +1,12 @@
-<div class="flex items-center p-5 gap-4">
+<div
+  class="flex justify-center items-center p-5 gap-4 flex-wrap md:flex-nowrap lg:flex-nowrap relative"
+>
+  <button
+    (click)="drawer.toggle()"
+    class="flex items-center gap-1.5 min-w-fit absolute top-[20px] left-[20px] sm:relative sm:top-0 sm:left-0"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
   <div class="flex items-center gap-1.5 min-w-fit">
     <mat-icon>access_time</mat-icon>
     {{ nowTime | date: "medium" }}

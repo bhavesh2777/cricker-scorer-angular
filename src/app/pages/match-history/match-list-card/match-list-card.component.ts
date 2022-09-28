@@ -14,9 +14,8 @@ export class MatchListCardComponent implements OnInit {
 
   viewFullScoreboard() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '60%',
       data: { dType: 'full-scoreboard' },
-      panelClass: 'dialog-common',
+      panelClass: ['dialog-common', 'fullscore-dialog-width'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

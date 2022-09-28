@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
 
@@ -10,6 +10,7 @@ import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
 export class HeaderComponent implements OnInit {
   nowTime: number;
   searchValue = '';
+  @Input() drawer: any;
   constructor(public dialog: MatDialog) {
     setInterval(() => {
       this.nowTime = Date.now();
