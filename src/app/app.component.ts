@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Match, matchStatusType, optedTypeEnum } from './models/match.model';
-import { Team } from './models/team.model';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +6,17 @@ import { Team } from './models/team.model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  sidenavMode = 'side';
+  alreadyOpened = true;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if (window.innerWidth <= 768) {
+      this.sidenavMode = 'over';
+      this.alreadyOpened = false;
+    } else this.sidenavMode = 'side';
+  }
   constructor() {}
-  ngOnInit() {}
+  ngOnInit() {
+    this.onResize(null);
+  }
 }

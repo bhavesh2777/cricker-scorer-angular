@@ -59,3 +59,11 @@ body {
   overflow: auto;
   max-height: 90%;
 }
+
+.fullscore-dialog-width {
+  @apply w-[99%] sm:w-3/5;
+}
+
+.forty-to-full-dialog {
+  @apply w-[99%] sm:w-2/5;
+}

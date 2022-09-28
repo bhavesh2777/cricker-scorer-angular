@@ -16,9 +16,8 @@ export class ActiveMatchComponent implements OnInit {
 
   viewFullScoreboard() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '60%',
       data: { dType: 'full-scoreboard' },
-      panelClass: 'dialog-common',
+      panelClass: ['dialog-common', 'fullscore-dialog-width'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -36,9 +35,8 @@ export class ActiveMatchComponent implements OnInit {
 
   openMatchAnalysis() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '60%',
       data: { dType: 'full-scoreboard' },
-      panelClass: 'dialog-common',
+      panelClass: ['dialog-common', 'fullscore-dialog-width'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -46,9 +44,8 @@ export class ActiveMatchComponent implements OnInit {
 
   viewPartnerShips() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '60%',
       data: { dType: 'full-scoreboard' },
-      panelClass: 'dialog-common',
+      panelClass: ['dialog-common', 'fullscore-dialog-width'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -56,9 +53,8 @@ export class ActiveMatchComponent implements OnInit {
 
   retireBatsman() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '40%',
       data: { dType: 'retire-batsman' },
-      panelClass: 'dialog-common',
+      panelClass: ['dialog-common', 'forty-to-full-dialog'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

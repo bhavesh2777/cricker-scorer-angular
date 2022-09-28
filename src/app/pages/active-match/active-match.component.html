@@ -1,34 +1,11 @@
-<div class="flex p-5 gap-5">
-  <div class="flex flex-col gap-4 w-full">
-    <div class="text-xl font-semibold ml-3">Active match</div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="text-base font-semibold ml-3 mb-1">Team1 v/s Team2</div>
-      <div class="flex gap-5 ml-3">
-        <div class="w-full font-medium flex flex-col justify-between gap-2">
-          <div class="w-max">Team1, 1st inning</div>
-          <div class="w-max text-2xl">70-0 (5.0)</div>
-        </div>
-        <div class="w-full font-medium flex flex-col justify-between">
-          <div>CRR</div>
-          <div>14.00</div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <app-score-table></app-score-table>
-    </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="flex gap-3">
-        <div class="flex items-center font-medium">This over:</div>
-        <app-overs></app-overs>
-      </div>
-    </div>
-  </div>
+<div
+  class="flex flex-col p-5 gap-5 lg:flex-row md:flex-row w-full sm:w-[95%] sm:m-auto"
+>
   <div class="flex flex-col gap-4 w-full">
     <div class="text-xl font-semibold ml-3">Score area</div>
     <div class="bg-white px-5 py-2 shadow-md rounded-md">
       <div class="flex flex-col gap-1">
-        <div class="flex justify-between flex-wrap px-5 py-2">
+        <div class="flex gap-2 justify-between flex-wrap px-5 py-2">
           <mat-checkbox>Wide</mat-checkbox>
           <mat-checkbox>No ball</mat-checkbox>
           <mat-checkbox>Leg Byes</mat-checkbox>
@@ -60,7 +37,7 @@
             Partnerships
           </button>
         </div>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-1">
           <button class="run-score-num">0</button>
           <button class="run-score-num">1</button>
           <button class="run-score-num">2</button>
@@ -86,6 +63,31 @@
         >
           Analytics
         </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-4 w-full">
+    <div class="text-xl font-semibold ml-3">Active match</div>
+    <div class="bg-white px-5 py-2 shadow-md rounded-md">
+      <div class="text-base font-semibold ml-3 mb-1">Team1 v/s Team2</div>
+      <div class="flex gap-5 ml-3">
+        <div class="w-full font-medium flex flex-col justify-between gap-2">
+          <div class="w-max">Team1, 1st inning</div>
+          <div class="w-max text-2xl">70-0 (5.0)</div>
+        </div>
+        <div class="w-full font-medium flex flex-col justify-between">
+          <div>CRR</div>
+          <div>14.00</div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white px-5 py-2 shadow-md rounded-md">
+      <app-score-table></app-score-table>
+    </div>
+    <div class="bg-white px-5 py-2 shadow-md rounded-md overflow-auto">
+      <div class="flex flex-col gap-3 lg:flex-row md:flex-row">
+        <div class="flex items-center font-medium">This over:</div>
+        <app-overs></app-overs>
       </div>
     </div>
   </div>

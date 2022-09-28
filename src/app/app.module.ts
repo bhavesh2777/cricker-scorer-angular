@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,7 @@ import { PlayerListCardComponent } from './pages/teams/player-list-card/player-l
 import { MatDialogComponent } from './shared/mat-dialog/mat-dialog.component';
 import { PartnershipsComponent } from './shared/partnerships/partnerships.component';
 import { AnalyticsComponent } from './shared/analytics/analytics.component';
+import { MatchListCardComponent } from './pages/match-history/match-list-card/match-list-card.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -35,8 +37,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { MatchListCardComponent } from './pages/match-history/match-list-card/match-list-card.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { MatchListCardComponent } from './pages/match-history/match-list-card/ma
     MatchListCardComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -76,6 +79,7 @@ import { MatchListCardComponent } from './pages/match-history/match-list-card/ma
     MatExpansionModule,
     MatTableModule,
     MatCheckboxModule,
+    MatSidenavModule,
     MatProgressBarModule,
     NgApexchartsModule,
   ],
