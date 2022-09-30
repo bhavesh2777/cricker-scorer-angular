@@ -20,9 +20,7 @@ export class MatDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogType
   ) {}
 
-  ngOnInit(): void {
-    console.log(this.data);
-  }
+  ngOnInit(): void {}
 
   uploadPlayerImg(files: FileList) {
     this.playerFile = files?.item(0);

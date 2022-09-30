@@ -1,17 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonService } from 'src/app/services/common.service';
 import { MatDialogComponent } from 'src/app/shared/components/mat-dialog/mat-dialog.component';
+import { Subscription } from 'rxjs';
+import { Match } from 'src/app/models/match.model';
 
 @Component({
   selector: 'app-active-match',
   templateUrl: './active-match.component.html',
   styleUrls: ['./active-match.component.css'],
 })
-export class ActiveMatchComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+export class ActiveMatchComponent implements OnInit, OnDestroy {
+  activeMatchSub: Subscription;
+  newMatchObj: Match | null;
+  currentInning: number;
+  constructor(
+    public dialog: MatDialog,
+    private readonly commonService: CommonService
+  ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.activeMatchSub = this.commonService.activeMatchObj.subscribe(
+      (item) => {
+        this.newMatchObj = item;
+        this.decideCurrentInningDetails();
+      }
+    );
     // this.chooseNextBowler();
+    // this.chooseOpeningPlayers();
+  }
+
+  decideCurrentInningDetails() {
+    const hostTeamInnings = this.newMatchObj?.fullMatchScore?.hostTeamInnings;
+    const visitorTeamInnings =
+      this.newMatchObj?.fullMatchScore?.visitorTeamInnings;
+    this.currentInning = 1;
+    if (
+      hostTeamInnings?.isInningsOver === true ||
+      visitorTeamInnings?.isInningsOver === true
+    )
+      this.currentInning = 2;
   }
 
   viewFullScoreboard() {
@@ -25,9 +53,17 @@ export class ActiveMatchComponent implements OnInit {
 
   chooseNextBowler() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
-      width: '40%',
       data: { dType: 'next-bowler' },
-      panelClass: 'dialog-common',
+      panelClass: ['dialog-common', 'forty-to-full-dialog'],
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  chooseOpeningPlayers() {
+    const dialogRef = this.dialog.open(MatDialogComponent, {
+      data: { dType: 'choose-opening-players' },
+      panelClass: ['dialog-common', 'forty-to-full-dialog'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -58,5 +94,9 @@ export class ActiveMatchComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  ngOnDestroy() {
+    this.activeMatchSub?.unsubscribe();
   }
 }

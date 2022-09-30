@@ -41,6 +41,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { OrdinalPipe } from './shared/pipes/ordinal.pipe';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     AnalyticsComponent,
     MatchListCardComponent,
     OnlyNumbersDirective,
+    OrdinalPipe,
   ],
   imports: [
     CommonModule,

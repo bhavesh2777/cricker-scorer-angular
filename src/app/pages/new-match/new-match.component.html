@@ -10,7 +10,7 @@
               placeholder="Select host team"
               formControlName="hostTeam"
             >
-              <mat-option [value]="item.teamId" *ngFor="let item of teamArr">{{
+              <mat-option [value]="item.title" *ngFor="let item of teamArr">{{
                 item.title
               }}</mat-option>
             </mat-select>
@@ -22,7 +22,7 @@
               placeholder="Select visitor team"
               formControlName="visitorTeam"
             >
-              <mat-option [value]="item.teamId" *ngFor="let item of teamArr">{{
+              <mat-option [value]="item.title" *ngFor="let item of teamArr">{{
                 item.title
               }}</mat-option>
             </mat-select>
