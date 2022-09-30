@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogComponent } from 'src/app/shared/mat-dialog/mat-dialog.component';
+import { MatDialogComponent } from 'src/app/shared/components/mat-dialog/mat-dialog.component';
 
 @Component({
   selector: 'app-team-list-card',

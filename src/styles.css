@@ -67,3 +67,19 @@ body {
 .forty-to-full-dialog {
   @apply w-[99%] sm:w-2/5;
 }
+
+.mat-form-field-subscript-wrapper {
+  @apply text-xs top-8;
+}
+
+.snackbar-success {
+  @apply text-white bg-green-500;
+}
+
+.snackbar-failure {
+  @apply text-white bg-red-500;
+}
+
+.mat-simple-snackbar {
+  justify-content: center !important;
+}

@@ -1,8 +1,8 @@
-export enum optedTypeEnum {
+export enum OptedTypeEnum {
   Bat = 'Bat',
   Bowl = 'Bowl',
 }
-export enum matchStatusType {
+export enum MatchStatusType {
   Active = 'Active',
   Inactive = 'Inactive',
 }
@@ -53,9 +53,9 @@ export class Match {
     public hostTeam: string,
     public visitorTeam: string,
     public tossWonBy: string,
-    public optedTo: optedTypeEnum,
+    public optedTo: OptedTypeEnum,
     public matchOvers: number,
-    public matchStatus: matchStatusType,
+    public matchStatus: MatchStatusType,
     public advancedSettings: AdvancedSettings
   ) {}
 }
