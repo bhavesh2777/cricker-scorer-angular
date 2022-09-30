@@ -36,3 +36,34 @@
   padding-bottom: 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+::ng-deep
+  .common-input.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid
+  .mat-form-field-outline-thick {
+  border: 2px solid #ef4d4d;
+  border-radius: 4px;
+}
+
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-infix {
+  border-top: none;
+  padding: 12px 0;
+  top: 1.5px;
+}
+
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-outline-start,
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-outline-end {
+  border: none;
+}
+
+::ng-deep
+  .dialog-select.mat-form-field-appearance-outline
+  .mat-form-field-wrapper {
+  padding-bottom: 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

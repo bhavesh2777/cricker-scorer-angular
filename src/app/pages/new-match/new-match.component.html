@@ -1,51 +1,82 @@
-<div class="flex p-5 justify-center items-center">
-  <div class="flex flex-col gap-4 w-full sm:w-3/5">
-    <div class="text-xl font-semibold ml-3">New match</div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="text-base font-semibold ml-3 mb-1">Teams</div>
-      <div>
-        <mat-form-field class="w-full common-input" appearance="outline">
-          <input matInput placeholder="Host team" type="text" />
-        </mat-form-field>
+<form [formGroup]="newMatch" class="w-full">
+  <div class="flex p-5 justify-center items-center">
+    <div class="flex flex-col gap-4 w-full sm:w-3/5">
+      <div class="text-xl font-semibold ml-3">New match</div>
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="text-base font-semibold ml-3 mb-1">Teams</div>
+        <div>
+          <mat-form-field class="w-full dialog-select" appearance="outline">
+            <mat-select
+              placeholder="Select host team"
+              formControlName="hostTeam"
+            >
+              <mat-option [value]="item.teamId" *ngFor="let item of teamArr">{{
+                item.title
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full dialog-select" appearance="outline">
+            <mat-select
+              placeholder="Select visitor team"
+              formControlName="visitorTeam"
+            >
+              <mat-option [value]="item.teamId" *ngFor="let item of teamArr">{{
+                item.title
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
-      <div>
-        <mat-form-field class="w-full common-input" appearance="outline">
-          <input matInput placeholder="Visitor team" type="text" />
-        </mat-form-field>
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="text-base font-semibold ml-3 mb-1">Toss won by</div>
+        <mat-radio-group
+          class="flex gap-4 ml-3 common-input"
+          formControlName="tossWonBy"
+        >
+          <mat-radio-button value="1">Host team</mat-radio-button>
+          <mat-radio-button value="2">Visitor team</mat-radio-button>
+        </mat-radio-group>
       </div>
-    </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="text-base font-semibold ml-3 mb-1">Toss won by</div>
-      <mat-radio-group class="flex gap-4 ml-3 common-input">
-        <mat-radio-button value="1">Host team</mat-radio-button>
-        <mat-radio-button value="2">Visitor team</mat-radio-button>
-      </mat-radio-group>
-    </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="text-base font-semibold ml-3 mb-1">Opted to?</div>
-      <mat-radio-group class="flex gap-4 ml-3 common-input">
-        <mat-radio-button value="1">Bat</mat-radio-button>
-        <mat-radio-button value="2">Bowl</mat-radio-button>
-      </mat-radio-group>
-    </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="text-base font-semibold ml-3 mb-1">Overs?</div>
-      <div>
-        <mat-form-field class="w-full common-input" appearance="outline">
-          <input matInput placeholder="50" type="text" />
-        </mat-form-field>
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="text-base font-semibold ml-3 mb-1">Opted to?</div>
+        <mat-radio-group
+          class="flex gap-4 ml-3 common-input"
+          formControlName="optedTo"
+        >
+          <mat-radio-button value="1">Bat</mat-radio-button>
+          <mat-radio-button value="2">Bowl</mat-radio-button>
+        </mat-radio-group>
       </div>
-    </div>
-    <div class="flex justify-around gap-4">
-      <button
-        routerLink="/settings"
-        class="w-full px-5 py-2 hover:bg-white rounded ease-out duration-500"
-      >
-        Advanced settings
-      </button>
-      <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
-        Start match
-      </button>
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="text-base font-semibold ml-3 mb-1">Overs?</div>
+        <div>
+          <mat-form-field class="w-full common-input" appearance="outline">
+            <input
+              matInput
+              placeholder="50"
+              type="text"
+              formControlName="matchOvers"
+              OnlyNumber="true"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="flex justify-around gap-4">
+        <button
+          routerLink="/settings"
+          class="w-full px-5 py-2 hover:bg-white rounded ease-out duration-500"
+        >
+          Advanced settings
+        </button>
+        <button
+          class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
+          (click)="submitStartMatch()"
+        >
+          Start match
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>
