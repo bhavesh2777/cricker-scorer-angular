@@ -1,57 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { BattingElements, BowlingElements } from 'src/app/models/match.model';
-
-const BATTING_ELEMENT_DATA: BattingElements[] = [
-  {
-    batsman: 'Player 1',
-    runs: 10,
-    balls: 10,
-    fours: 1,
-    sixes: 2,
-    strikeRate: 164.24,
-  },
-  {
-    batsman: 'Player 1',
-    runs: 10,
-    balls: 10,
-    fours: 1,
-    sixes: 2,
-    strikeRate: 164.24,
-  },
-];
-
-const BOWLING_ELEMENT_DATA: BowlingElements[] = [
-  {
-    bowler: 'Player 1',
-    overs: 10,
-    maidens: 10,
-    runs: 1,
-    wickets: 2,
-    economyRate: 164.24,
-  },
-];
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import {
+  BattingElements,
+  BowlingElements,
+  FullMatchScore,
+  TeamInnings,
+  TempMatch,
+} from 'src/app/models/match.model';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-score-table',
   templateUrl: './score-table.component.html',
   styleUrls: ['./score-table.component.css'],
 })
-export class ScoreTableComponent implements OnInit {
+export class ScoreTableComponent implements OnInit, OnDestroy {
   battingColumns = [
     {
       columnDef: 'batsman',
       header: 'Batsman',
-      cell: (element: BattingElements) => `${element.batsman}`,
+      cell: (element: BattingElements) => `${element.playerName}`,
     },
     {
       columnDef: 'runs',
       header: 'R',
-      cell: (element: BattingElements) => `${element.runs}`,
+      cell: (element: BattingElements) => `${element.runsScored}`,
     },
     {
       columnDef: 'balls',
       header: 'B',
-      cell: (element: BattingElements) => `${element.balls}`,
+      cell: (element: BattingElements) => `${element.ballsPlayed}`,
     },
     {
       columnDef: 'fours',
@@ -69,14 +47,13 @@ export class ScoreTableComponent implements OnInit {
       cell: (element: BattingElements) => `${element.strikeRate}`,
     },
   ];
-  battingDataSource = BATTING_ELEMENT_DATA;
   battingDisplayedColumns = this.battingColumns.map((c) => c.columnDef);
 
   bowlingColumns = [
     {
       columnDef: 'bowler',
       header: 'Bowler',
-      cell: (element: BowlingElements) => `${element.bowler}`,
+      cell: (element: BowlingElements) => `${element.playerName}`,
     },
     {
       columnDef: 'overs',
@@ -91,7 +68,7 @@ export class ScoreTableComponent implements OnInit {
     {
       columnDef: 'runs',
       header: 'R',
-      cell: (element: BowlingElements) => `${element.runs}`,
+      cell: (element: BowlingElements) => `${element.runsConceded}`,
     },
     {
       columnDef: 'wickets',
@@ -104,10 +81,25 @@ export class ScoreTableComponent implements OnInit {
       cell: (element: BowlingElements) => `${element.economyRate}`,
     },
   ];
-  bowlingDataSource = BOWLING_ELEMENT_DATA;
   bowlingDisplayedColumns = this.bowlingColumns.map((c) => c.columnDef);
 
-  constructor() {}
+  activeMatchSub: Subscription | undefined;
+  currInningScore;
+  battingDataSource = [];
+  bowlingDataSource = [];
+  constructor(private readonly commonService: CommonService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.activeMatchSub = this.commonService.activeMatch.subscribe(
+      (activeMatchObj: TempMatch) => {
+        this.currInningScore = activeMatchObj?.currentInnings?.score;
+        this.battingDataSource = activeMatchObj.currentInnings.batsman;
+        this.bowlingDataSource = activeMatchObj.currentInnings.bowler;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.activeMatchSub?.unsubscribe();
+  }
 }

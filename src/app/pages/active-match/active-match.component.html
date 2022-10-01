@@ -70,22 +70,24 @@
     <div class="text-xl font-semibold ml-3">Active match</div>
     <div class="bg-white px-5 py-2 shadow-md rounded-md">
       <div class="text-base font-semibold ml-3 mb-1">
-        {{ newMatchObj?.hostTeam }} v/s {{ newMatchObj?.visitorTeam }}
+        {{ activeMatch?.hostTeam }} v/s {{ activeMatch?.visitorTeam }}
       </div>
       <div class="flex gap-5 ml-3">
         <div class="w-full font-medium flex flex-col justify-between gap-2">
           <div class="w-max">
-            {{
-              currentInning === 1
-                ? newMatchObj?.firstInningsTeam
-                : newMatchObj?.secondInningsTeam
-            }}, {{ currentInning | ordinal }} inning
+            {{ activeMatch?.currentInnings?.teamName }},
+            {{ activeMatch?.currentInnings?.inningNo | ordinal }} inning
           </div>
-          <div class="w-max text-2xl">70-0 (5.0)</div>
+          <div class="w-max text-2xl">
+            {{ activeMatch?.currentInnings?.score?.totalRuns }}-{{
+              activeMatch?.currentInnings?.score?.totalWickets
+            }}
+            ({{ activeMatch?.currentInnings?.score?.totalOvers }})
+          </div>
         </div>
         <div class="w-full font-medium flex flex-col justify-between">
           <div>CRR</div>
-          <div>14.00</div>
+          <div>{{ activeMatch?.currentInnings?.score?.currRunrate }}</div>
         </div>
       </div>
     </div>

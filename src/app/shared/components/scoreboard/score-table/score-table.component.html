@@ -32,7 +32,13 @@
       <td mat-footer-cell *matFooterCellDef colspan="6">
         <div class="flex justify-between">
           <div>Extras</div>
-          <div>1 LB, 1 WD, 0 NB</div>
+          <div>
+            {{ currInningScore?.extraRuns?.legBy }} LB,
+            {{ currInningScore?.extraRuns?.wide }} WD,{{
+              currInningScore?.extraRuns?.noBall
+            }}
+            NB
+          </div>
         </div>
       </td>
     </ng-container>
@@ -42,7 +48,13 @@
       <td mat-footer-cell *matFooterCellDef colspan="6">
         <div class="flex justify-between">
           <div>Total</div>
-          <div>70-0 (50.0) 14.00 RR</div>
+          <div>
+            {{ currInningScore?.totalRuns }}-{{
+              currInningScore?.totalWickets
+            }}
+            ({{ currInningScore?.totalOvers }})
+            {{ currInningScore?.currRunrate }} RR
+          </div>
         </div>
       </td>
     </ng-container>

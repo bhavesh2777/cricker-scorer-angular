@@ -3,35 +3,36 @@
   *ngFor="let item of oversArray"
 >
   <div class="flex flex-col">
-    <div class="font-medium">Ov 5</div>
-    <div class="h-full w-max flex items-center text-gray-500">6 Runs</div>
+    <div class="font-medium">Ov {{ item?.overNo }}</div>
+    <div class="h-full w-max flex items-center text-gray-500">
+      {{ item?.runsConceded }} Runs
+    </div>
   </div>
   <div class="flex flex-col gap-2 w-full">
-    <div class="font-medium">Player1 to Player2 & Player 3</div>
     <div class="flex w-full gap-3">
-      <div>
+      <div *ngFor="let ballItem of item?.allBalls">
         <div
           class="h-8 w-8 font-medium bg-skin-main-primary rounded-full flex justify-center items-center"
+          [ngClass]="{
+            'bg-orange-400': ballItem?.runs === 4,
+            'bg-green-600 ': ballItem?.runs === 6,
+            'bg-red-600 ': ballItem?.isWicket === true,
+            'text-white':
+              ballItem?.runs === 4 ||
+              ballItem?.runs === 6 ||
+              ballItem?.isWicket === true
+          }"
         >
-          0
+          {{ ballItem?.isWicket === true ? "OUT" : ballItem?.runs }}
         </div>
-        <div class="text-xs text-gray-500 text-center">1LB</div>
-      </div>
-      <div>
         <div
-          class="h-8 w-8 font-medium bg-skin-main-primary rounded-full flex justify-center items-center"
+          class="text-xs text-gray-500 text-center"
+          *ngIf="ballItem?.extraRuns != 0"
         >
-          1
+          {{ ballItem?.extraRuns }}{{ ballItem?.extraType }}
         </div>
       </div>
-      <div>
-        <div
-          class="h-8 w-8 font-medium bg-skin-main-primary rounded-full flex justify-center items-center"
-        >
-          0
-        </div>
-        <div class="text-xs text-gray-500 text-center">4LB</div>
-      </div>
+      <!-- 
       <div>
         <div
           class="h-8 w-8 font-medium bg-orange-400 text-white rounded-full flex justify-center items-center"
@@ -53,7 +54,7 @@
         >
           OUT
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

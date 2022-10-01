@@ -6,7 +6,6 @@ import {
   AdvancedSettings,
   ExtraRuns,
   FullMatchScore,
-  Match,
   MatchStatusType,
   OptedTypeEnum,
   TeamInnings,
@@ -20,7 +19,7 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./new-match.component.css'],
 })
 export class NewMatchComponent implements OnInit {
-  newMatch: FormGroup;
+  newMatch: FormGroup | undefined;
   teamArr: Team[] = [];
 
   constructor(
@@ -50,7 +49,7 @@ export class NewMatchComponent implements OnInit {
   }
 
   submitStartMatch() {
-    if (this.newMatch.valid) {
+    if (this.newMatch?.valid) {
       const hostTeam = this.newMatch.controls['hostTeam'].value;
       const visitorTeam = this.newMatch.controls['visitorTeam'].value;
       const tossWonBy = this.newMatch.controls['tossWonBy'].value;
@@ -67,29 +66,52 @@ export class NewMatchComponent implements OnInit {
 
       // const newMatchObj: Match = {
       //   matchId: 1,
-      //   hostTeam: hostTeam,
-      //   visitorTeam: visitorTeam,
-      //   tossWonBy: tossWonBy == '1' ? hostTeam : visitorTeam,
-      //   matchOvers: matchOvers,
-      //   currentInning: 1,
-      //   optedTo: optedTo == '1' ? OptedTypeEnum.Bat : OptedTypeEnum.Bowl,
+      //   hostTeam: 'Team A',
+      //   visitorTeam: 'Team B',
+      //   tossWonBy: 'Team A',
+      //   matchOvers: 11,
+      //   optedTo: OptedTypeEnum.Bat,
       //   matchStatus: MatchStatusType.Active,
+      //   firstInningsTeam: 'Team A',
+      //   secondInningsTeam: 'Team B',
       //   fullMatchScore: {
       //     hostTeamInnings: {
-      //       currentRunRate: 0,
+      //       teamDetails: {
+      //         teamId: 1,
+      //         title: 'Team A',
+      //         matchesLost: 0,
+      //         matchesWon: 0,
+      //         teamSquad: [
+      //           'Player 1',
+      //           'Player 2',
+      //           'Player 3',
+      //           'Player 4',
+      //           'Player 5',
+      //         ],
+      //       },
       //       extraRuns: { legByRuns: 0, noballRuns: 0, wideRuns: 0 },
-      //       isFirstInnings: batFirstTeam == 'HOST',
-      //       isInningsStarted: false,
+      //       currentRunRate: 0,
       //       isInningsOver: false,
       //       oversPlayed: 0,
       //       totalRuns: 0,
       //       matchAllOvers: [],
       //     },
       //     visitorTeamInnings: {
+      //       teamDetails: {
+      //         teamId: 1,
+      //         title: 'Team A',
+      //         matchesLost: 0,
+      //         matchesWon: 0,
+      //         teamSquad: [
+      //           'Player 1',
+      //           'Player 2',
+      //           'Player 3',
+      //           'Player 4',
+      //           'Player 5',
+      //         ],
+      //       },
       //       currentRunRate: 0,
       //       extraRuns: { legByRuns: 0, noballRuns: 0, wideRuns: 0 },
-      //       isFirstInnings: batFirstTeam == 'VISITOR',
-      //       isInningsStarted: false,
       //       isInningsOver: false,
       //       oversPlayed: 0,
       //       totalRuns: 0,

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'src/app/services/common.service';
 import { MatDialogComponent } from 'src/app/shared/components/mat-dialog/mat-dialog.component';
 import { Subscription } from 'rxjs';
-import { Match } from 'src/app/models/match.model';
+import { TempMatch } from 'src/app/models/match.model';
 
 @Component({
   selector: 'app-active-match',
@@ -12,34 +12,21 @@ import { Match } from 'src/app/models/match.model';
 })
 export class ActiveMatchComponent implements OnInit, OnDestroy {
   activeMatchSub: Subscription;
-  newMatchObj: Match | null;
-  currentInning: number;
+  activeMatch: any;
   constructor(
     public dialog: MatDialog,
     private readonly commonService: CommonService
   ) {}
 
   ngOnInit() {
-    this.activeMatchSub = this.commonService.activeMatchObj.subscribe(
-      (item) => {
-        this.newMatchObj = item;
-        this.decideCurrentInningDetails();
-      }
-    );
-    // this.chooseNextBowler();
-    // this.chooseOpeningPlayers();
-  }
-
-  decideCurrentInningDetails() {
-    const hostTeamInnings = this.newMatchObj?.fullMatchScore?.hostTeamInnings;
-    const visitorTeamInnings =
-      this.newMatchObj?.fullMatchScore?.visitorTeamInnings;
-    this.currentInning = 1;
-    if (
-      hostTeamInnings?.isInningsOver === true ||
-      visitorTeamInnings?.isInningsOver === true
-    )
-      this.currentInning = 2;
+    this.activeMatchSub = this.commonService.activeMatch.subscribe((item) => {
+      this.activeMatch = item;
+      if (
+        this.activeMatch?.currentInnings?.batsman.length == 0 ||
+        this.activeMatch?.currentInnings?.bowler.length == 0
+      )
+        this.chooseOpeningPlayers();
+    });
   }
 
   viewFullScoreboard() {
