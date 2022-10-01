@@ -301,44 +301,56 @@
 <div *ngIf="data.dType == 'choose-opening-players'">
   <div class="flex justify-between">
     <div class="text-xl">Choose opening players</div>
-    <button [mat-dialog-close]="false">
-      <mat-icon>close</mat-icon>
-    </button>
   </div>
-
-  <div class="w-3/4 flex justify-center items-center m-auto my-4">
-    <mat-form-field class="w-full dialog-select" appearance="outline">
-      <mat-select placeholder="On-Strike Batsman">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="w-3/4 flex justify-center items-center m-auto my-4">
-    <mat-form-field class="w-full dialog-select" appearance="outline">
-      <mat-select placeholder="Non-strike Batsman">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="w-3/4 flex justify-center items-center m-auto my-4">
-    <mat-form-field class="w-full dialog-select" appearance="outline">
-      <mat-select placeholder="Choose bowler">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <form [formGroup]="openingPlayerForm" class="w-full">
+    <div class="w-3/4 flex justify-center items-center m-auto my-4">
+      <mat-form-field class="w-full dialog-select" appearance="outline">
+        <mat-select
+          placeholder="On-Strike Batsman"
+          formControlName="strikeBatsman"
+        >
+          <mat-option
+            [value]="item?.playerId"
+            *ngFor="let item of allTeamsSquads?.battingSquad"
+            >{{ item?.playerName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="w-3/4 flex justify-center items-center m-auto my-4">
+      <mat-form-field class="w-full dialog-select" appearance="outline">
+        <mat-select
+          placeholder="Non-strike Batsman"
+          formControlName="nonStrikeBatsman"
+        >
+          <mat-option
+            [value]="item?.playerId"
+            *ngFor="let item of allTeamsSquads?.battingSquad"
+            >{{ item?.playerName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="w-3/4 flex justify-center items-center m-auto my-4">
+      <mat-form-field class="w-full dialog-select" appearance="outline">
+        <mat-select placeholder="Choose bowler" formControlName="bowler">
+          <mat-option
+            [value]="item?.playerId"
+            *ngFor="let item of allTeamsSquads?.bowlingSquad"
+            >{{ item?.playerName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
 
   <div class="flex gap-4 justify-end items-center">
     <button
-      [mat-dialog-close]="false"
-      class="px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500"
+      (click)="saveOpeningPlayers()"
+      class="bg-[#32cd32] px-5 py-2 rounded text-white"
     >
-      Cancel
+      Save
     </button>
-    <button class="bg-[#32cd32] px-5 py-2 rounded text-white">Save</button>
   </div>
 </div>
 

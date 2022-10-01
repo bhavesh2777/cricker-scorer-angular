@@ -10,7 +10,7 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  settingsForm: FormGroup;
+  settingsForm: FormGroup | undefined;
   constructor(private commonService: CommonService) {}
 
   ngOnInit() {
@@ -46,34 +46,38 @@ export class SettingsComponent implements OnInit {
     });
     this.settingsForm.controls['noBallAllow'].valueChanges.subscribe(
       (value) => {
-        if (!value) {
-          this.settingsForm.controls['noBallReball'].setValue(value);
-          this.settingsForm.controls['noBallRun'].setValue(0);
-          this.settingsForm.controls['noBallReball'].disable();
-          this.settingsForm.controls['noBallRun'].disable();
-        } else {
-          this.settingsForm.controls['noBallReball'].enable();
-          this.settingsForm.controls['noBallRun'].enable();
+        if (this.settingsForm) {
+          if (!value) {
+            this.settingsForm.controls['noBallReball'].setValue(value);
+            this.settingsForm.controls['noBallRun'].setValue(0);
+            this.settingsForm.controls['noBallReball'].disable();
+            this.settingsForm.controls['noBallRun'].disable();
+          } else {
+            this.settingsForm.controls['noBallReball'].enable();
+            this.settingsForm.controls['noBallRun'].enable();
+          }
         }
       }
     );
     this.settingsForm.controls['wideBallAllow'].valueChanges.subscribe(
       (value) => {
-        if (!value) {
-          this.settingsForm.controls['wideBallReball'].setValue(value);
-          this.settingsForm.controls['wideBallRun'].setValue(0);
-          this.settingsForm.controls['wideBallReball'].disable();
-          this.settingsForm.controls['wideBallRun'].disable();
-        } else {
-          this.settingsForm.controls['wideBallReball'].enable();
-          this.settingsForm.controls['wideBallRun'].enable();
+        if (this.settingsForm) {
+          if (!value) {
+            this.settingsForm.controls['wideBallReball'].setValue(value);
+            this.settingsForm.controls['wideBallRun'].setValue(0);
+            this.settingsForm.controls['wideBallReball'].disable();
+            this.settingsForm.controls['wideBallRun'].disable();
+          } else {
+            this.settingsForm.controls['wideBallReball'].enable();
+            this.settingsForm.controls['wideBallRun'].enable();
+          }
         }
       }
     );
   }
 
   saveSettings() {
-    if (this.settingsForm.valid) {
+    if (this.settingsForm?.valid) {
       const playersPerTeam = this.settingsForm.controls['playersPerTeam'].value;
       const noBallAllow = this.settingsForm.controls['noBallAllow'].value;
       const noBallReball = this.settingsForm.controls['noBallReball'].value;
