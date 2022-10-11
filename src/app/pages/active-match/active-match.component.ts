@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'src/app/services/common.service';
 import { MatDialogComponent } from 'src/app/shared/components/mat-dialog/mat-dialog.component';
 import { Subscription } from 'rxjs';
-import { TempMatch } from 'src/app/models/match.model';
+import { ScoreRunDetails, TempMatch } from 'src/app/models/match.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-active-match',
@@ -11,14 +13,42 @@ import { TempMatch } from 'src/app/models/match.model';
   styleUrls: ['./active-match.component.css'],
 })
 export class ActiveMatchComponent implements OnInit, OnDestroy {
+  scoreArea: FormGroup | undefined;
   activeMatchSub: Subscription;
   activeMatch: any;
+  runList = [0, 1, 2, 3, 4, 5, 6];
+
+  get wideType(): boolean {
+    return this.scoreArea.controls['wideType'].value;
+  }
+  get noBall(): boolean {
+    return this.scoreArea.controls['noBall'].value;
+  }
+  get legByes(): boolean {
+    return this.scoreArea.controls['legByes'].value;
+  }
+  get wicket(): boolean {
+    return this.scoreArea.controls['wicket'].value;
+  }
+  get totalOvers(): number {
+    const totalBalls = this.activeMatch?.currentInnings?.score?.totalBalls;
+    return this.commonService.ballsToOvers(totalBalls);
+  }
+
   constructor(
     public dialog: MatDialog,
-    private readonly commonService: CommonService
+    private readonly commonService: CommonService,
+    private readonly matchService: MatchService
   ) {}
 
   ngOnInit() {
+    this.scoreArea = new FormGroup({
+      wideType: new FormControl(false),
+      noBall: new FormControl(false),
+      legByes: new FormControl(false),
+      wicket: new FormControl(false),
+    });
+
     this.activeMatchSub = this.commonService.activeMatch.subscribe((item) => {
       this.activeMatch = item;
       if (
@@ -27,6 +57,20 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
       )
         this.chooseOpeningPlayers();
     });
+  }
+
+  scoreRuns(runScored: number) {
+    const scoreRunObj: ScoreRunDetails = {
+      runScored,
+      wideType: this.wideType,
+      noBall: this.noBall,
+      legByes: this.legByes,
+      wicket: this.wicket,
+    };
+    const scoreResult = this.matchService.scoreOneBall(scoreRunObj);
+    // snackbar result
+    if (scoreResult) this.commonService.openSuccessSnackbar('Scored!');
+    else this.commonService.openFailureSnackbar('Failed to score run!');
   }
 
   viewFullScoreboard() {

@@ -42,9 +42,9 @@ export const storedCurrMatch: TempMatch = {
     score: {
       totalRuns: 0,
       totalWickets: 0,
-      totalOvers: 0.0,
+      totalBalls: 0,
       currRunrate: (0.0).toFixed(2),
-      extraRuns: { legBy: 0, wide: 0, noBall: 0 },
+      extraRuns: { wide: 0, noBall: 0 },
     },
     thisOver: [
       {

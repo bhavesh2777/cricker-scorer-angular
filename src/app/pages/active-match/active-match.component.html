@@ -1,71 +1,74 @@
 <div
   class="flex flex-col p-5 gap-5 lg:flex-row md:flex-row w-full sm:w-[95%] sm:m-auto"
 >
-  <div class="flex flex-col gap-4 w-full">
-    <div class="text-xl font-semibold ml-3">Score area</div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="flex flex-col gap-1">
-        <div class="flex gap-2 justify-between flex-wrap px-5 py-2">
-          <mat-checkbox>Wide</mat-checkbox>
-          <mat-checkbox>No ball</mat-checkbox>
-          <mat-checkbox>Leg Byes</mat-checkbox>
-          <mat-checkbox>Wicket</mat-checkbox>
+  <form [formGroup]="scoreArea" class="w-full">
+    <div class="flex flex-col gap-4 w-full">
+      <div class="text-xl font-semibold ml-3">Score area</div>
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="flex flex-col gap-1">
+          <div class="flex gap-2 justify-between flex-wrap px-5 py-2">
+            <mat-checkbox formControlName="wideType">Wide</mat-checkbox>
+            <mat-checkbox formControlName="noBall">No ball</mat-checkbox>
+            <mat-checkbox formControlName="legByes">Leg Byes</mat-checkbox>
+            <mat-checkbox formControlName="wicket">Wicket</mat-checkbox>
+          </div>
+          <div class="flex gap-3 justify-between items-center">
+            <button
+              (click)="retireBatsman()"
+              class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
+            >
+              Retire
+            </button>
+            <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
+              Swap Batsman
+            </button>
+          </div>
         </div>
-        <div class="flex gap-3 justify-between items-center">
+      </div>
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="flex justify-between items-center gap-12">
+          <div class="flex flex-col gap-3">
+            <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
+              Undo
+            </button>
+            <button
+              class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
+              (click)="viewPartnerShips()"
+            >
+              Partnerships
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <button
+              class="run-score-num"
+              (click)="scoreRuns(runItem)"
+              *ngFor="let runItem of runList"
+            >
+              {{ runItem }}
+            </button>
+            <button class="run-score-num">...</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white px-5 py-2 shadow-md rounded-md">
+        <div class="flex gap-5 justify-between">
           <button
-            (click)="retireBatsman()"
             class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
+            (click)="viewFullScoreboard()"
           >
-            Retire
-          </button>
-          <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
-            Swap Batsman
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="flex justify-between items-center gap-12">
-        <div class="flex flex-col gap-3">
-          <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
-            Undo
+            Full scoreboard
           </button>
           <button
             class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
-            (click)="viewPartnerShips()"
+            (click)="openMatchAnalysis()"
           >
-            Partnerships
+            Analytics
           </button>
         </div>
-        <div class="flex flex-wrap gap-1">
-          <button class="run-score-num">0</button>
-          <button class="run-score-num">1</button>
-          <button class="run-score-num">2</button>
-          <button class="run-score-num">3</button>
-          <button class="run-score-num">4</button>
-          <button class="run-score-num">5</button>
-          <button class="run-score-num">6</button>
-          <button class="run-score-num">...</button>
-        </div>
       </div>
     </div>
-    <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <div class="flex gap-5 justify-between">
-        <button
-          class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
-          (click)="viewFullScoreboard()"
-        >
-          Full scoreboard
-        </button>
-        <button
-          class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
-          (click)="openMatchAnalysis()"
-        >
-          Analytics
-        </button>
-      </div>
-    </div>
-  </div>
+  </form>
   <div class="flex flex-col gap-4 w-full">
     <div class="text-xl font-semibold ml-3">Active match</div>
     <div class="bg-white px-5 py-2 shadow-md rounded-md">
@@ -82,7 +85,7 @@
             {{ activeMatch?.currentInnings?.score?.totalRuns }}-{{
               activeMatch?.currentInnings?.score?.totalWickets
             }}
-            ({{ activeMatch?.currentInnings?.score?.totalOvers }})
+            ({{ totalOvers }})
           </div>
         </div>
         <div class="w-full font-medium flex flex-col justify-between">
