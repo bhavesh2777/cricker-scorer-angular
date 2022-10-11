@@ -14,6 +14,18 @@ export class CommonService {
 
   constructor(private _snackBar: MatSnackBar) {}
 
+  ballsToOvers(totalBalls: number) {
+    if (totalBalls % 6 == 0) return totalBalls / 6;
+    else {
+      let num = Math.floor(totalBalls / 6);
+      return (totalBalls % 6) / 10 + num;
+    }
+  }
+
+  ballsToWhichOver(totalBalls: number) {
+    return Math.floor(totalBalls / 6);
+  }
+
   openSuccessSnackbar(message = 'Success!') {
     this._snackBar.open(message, '', {
       duration: 3000,

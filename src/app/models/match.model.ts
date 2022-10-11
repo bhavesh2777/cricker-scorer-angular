@@ -152,9 +152,9 @@ export class TempMatch {
       score: {
         totalRuns: number;
         totalWickets: number;
-        totalOvers: number;
+        totalBalls: number;
         currRunrate: string;
-        extraRuns: { legBy: number; wide: number; noBall: number };
+        extraRuns: { wide: number; noBall: number };
       };
       batsman: BattingElements[];
       bowler: BowlingElements[];
@@ -165,4 +165,12 @@ export class TempMatch {
       }[];
     }
   ) {}
+}
+
+export interface ScoreRunDetails {
+  runScored: number;
+  wideType: boolean;
+  noBall: boolean;
+  legByes: boolean;
+  wicket: boolean;
 }
