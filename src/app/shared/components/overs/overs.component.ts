@@ -17,7 +17,12 @@ export class OversComponent implements OnInit {
   ngOnInit() {
     this.activeMatchSub = this.commonService.activeMatch.subscribe(
       (activeMatchObj: TempMatch) => {
-        this.oversArray = activeMatchObj?.currentInnings?.thisOver;
+        const tempOverArr = activeMatchObj?.currentInnings?.thisOver;
+        // Activate after temp code is done
+        // tempOverArr.sort((a, b) => a.overNo + b.overNo);
+        // console.log('tempOverArr', tempOverArr);
+
+        this.oversArray = tempOverArr;
       }
     );
   }
