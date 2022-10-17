@@ -123,7 +123,6 @@ export interface BowlingElements {
 }
 
 export enum ExtraRunType {
-  LegBy = 'LB',
   Wide = 'WD',
   NoBall = 'NB',
 }

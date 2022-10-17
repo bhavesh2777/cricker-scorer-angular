@@ -46,13 +46,7 @@ export const storedCurrMatch: TempMatch = {
       currRunrate: (0.0).toFixed(2),
       extraRuns: { wide: 0, noBall: 0 },
     },
-    thisOver: [
-      {
-        overNo: 0,
-        runsConceded: 0,
-        allBalls: [],
-      },
-    ],
+    thisOver: [],
     batsman: [],
     bowler: [],
   },
