@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   BattingElements,
@@ -15,11 +15,13 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./score-table.component.css'],
 })
 export class ScoreTableComponent implements OnInit, OnDestroy {
+  @Input() isActiveMatch: boolean;
   battingColumns = [
     {
       columnDef: 'batsman',
       header: 'Batsman',
-      cell: (element: BattingElements) => `${element.playerName}`,
+      cell: (element: BattingElements) =>
+        `${element.playerName}${element.isOnStrike ? '*' : ''}`,
     },
     {
       columnDef: 'runs',
@@ -84,6 +86,7 @@ export class ScoreTableComponent implements OnInit, OnDestroy {
   bowlingDisplayedColumns = this.bowlingColumns.map((c) => c.columnDef);
 
   activeMatchSub: Subscription | undefined;
+  isMiniScore = true;
   currInningScore;
   battingDataSource = [];
   bowlingDataSource = [];
@@ -94,7 +97,12 @@ export class ScoreTableComponent implements OnInit, OnDestroy {
       (activeMatchObj: TempMatch) => {
         this.currInningScore = activeMatchObj?.currentInnings?.score;
         this.battingDataSource = activeMatchObj.currentInnings.batsman;
-        this.bowlingDataSource = activeMatchObj.currentInnings.bowler;
+
+        const tempBowlerArr = activeMatchObj.currentInnings.bowler;
+        let currBowler = tempBowlerArr.find((el) => el.isBowlingCurr === true);
+        if (this.isActiveMatch)
+          this.bowlingDataSource = currBowler ? [currBowler] : [];
+        else this.bowlingDataSource = tempBowlerArr;
       }
     );
   }

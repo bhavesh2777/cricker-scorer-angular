@@ -14,16 +14,16 @@
         </div>
         <div
           class="text-xs text-gray-500"
-          *ngIf="column.columnDef == 'batsman' && true"
+          *ngIf="column.columnDef == 'batsman' && !isMiniScore"
         >
           not out
         </div>
-        <div
+        <!-- <div
           class="text-xs text-gray-500"
           *ngIf="column.columnDef == 'batsman' && false"
         >
           out details
-        </div>
+        </div> -->
       </td>
     </ng-container>
 
@@ -60,8 +60,16 @@
 
     <tr mat-header-row *matHeaderRowDef="battingDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: battingDisplayedColumns"></tr>
-    <tr mat-footer-row *matFooterRowDef="['extras']"></tr>
-    <tr mat-footer-row *matFooterRowDef="['totalScore']"></tr>
+    <tr
+      mat-footer-row
+      *matFooterRowDef="['extras']"
+      [hidden]="isMiniScore"
+    ></tr>
+    <tr
+      mat-footer-row
+      *matFooterRowDef="['totalScore']"
+      [hidden]="isMiniScore"
+    ></tr>
   </table>
 
   <!-- Bowling scores -->

@@ -9,7 +9,6 @@
           <div class="flex gap-2 justify-between flex-wrap px-5 py-2">
             <mat-checkbox formControlName="wideType">Wide</mat-checkbox>
             <mat-checkbox formControlName="noBall">No ball</mat-checkbox>
-            <mat-checkbox formControlName="legByes">Leg Byes</mat-checkbox>
             <mat-checkbox formControlName="wicket">Wicket</mat-checkbox>
           </div>
           <div class="flex gap-3 justify-between items-center">
@@ -95,12 +94,12 @@
       </div>
     </div>
     <div class="bg-white px-5 py-2 shadow-md rounded-md">
-      <app-score-table></app-score-table>
+      <app-score-table [isActiveMatch]="true"></app-score-table>
     </div>
     <div class="bg-white px-5 py-2 shadow-md rounded-md overflow-auto">
       <div class="flex flex-col gap-3 lg:flex-row md:flex-row">
         <div class="flex items-center font-medium">This over:</div>
-        <app-overs></app-overs>
+        <app-overs [isActiveMatch]="true"></app-overs>
       </div>
     </div>
   </div>
