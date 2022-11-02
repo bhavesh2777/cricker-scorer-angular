@@ -21,7 +21,7 @@ import { CommonService } from 'src/app/services/common.service';
 export class MatDialogComponent implements OnInit, OnDestroy {
   enteredPlayerName = '';
   enteredTeamName = '';
-  nextBowler = '';
+  chooseNewBowler = null;
   replacedBatsman = '';
   playerFile: File | null = null;
   teamFile: File | null = null;
@@ -41,7 +41,10 @@ export class MatDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.data.dType == 'choose-opening-players') {
+    if (
+      this.data.dType == 'choose-opening-players' ||
+      this.data.dType == 'next-bowler'
+    ) {
       this.activeMatchSub = this.commonService.activeMatch.subscribe((item) => {
         this.activeMatch = item;
         const tempAllSquad = this.commonService.allTeamSquad.value;
@@ -110,31 +113,36 @@ export class MatDialogComponent implements OnInit, OnDestroy {
 
       const strikeBatsmanObj: BattingElements = {
         playerName: strikeBatsman.playerName,
+        playerId: strikeBatsman.playerId,
         ballsPlayed: 0,
         isOnStrike: true,
         runsScored: 0,
         outStatus: OutStatus.NOT_OUT,
         fours: 0,
         sixes: 0,
-        strikeRate: 0,
+        strikeRate: '0',
       };
       const nonStrikeBatsmanObj: BattingElements = {
         playerName: nonStrikeBatsman.playerName,
+        playerId: nonStrikeBatsman.playerId,
         ballsPlayed: 0,
         isOnStrike: false,
         runsScored: 0,
         outStatus: OutStatus.NOT_OUT,
         fours: 0,
         sixes: 0,
-        strikeRate: 0,
+        strikeRate: '0',
       };
       const bowlerObj: BowlingElements = {
         playerName: bowler.playerName,
+        playerId: bowler.playerId,
         overs: 0.0,
+        isBowlingCurr: true,
+        ballsThrowed: 0,
         maidens: 0,
         runsConceded: 0,
         wickets: 0,
-        economyRate: 0.0,
+        economyRate: '0.0',
       };
       tempActiveMatch.currentInnings.batsman = [
         strikeBatsmanObj,
@@ -145,6 +153,68 @@ export class MatDialogComponent implements OnInit, OnDestroy {
       this.commonService.openSuccessSnackbar('Successfully selected!');
       this.dialogRef.close();
     } else this.commonService.openFailureSnackbar('All fields are required!');
+  }
+
+  saveNextBowler() {
+    if (!this.allTeamsSquads) {
+      this.commonService.openFailureSnackbar();
+      return null;
+    }
+    if (this.chooseNewBowler) {
+      const tempActiveMatch = { ...this.activeMatch };
+      const score = tempActiveMatch.currentInnings.score;
+      const thisOver = tempActiveMatch.currentInnings.thisOver;
+
+      // Check last over bowler
+      const lastBowler = tempActiveMatch.currentInnings.bowler.find(
+        (item) => item.isBowlingCurr === true
+      );
+      if (lastBowler.playerId === this.chooseNewBowler) {
+        this.commonService.openFailureSnackbar(
+          'Please select different bowler from last over!'
+        );
+        return null;
+      }
+      lastBowler.isBowlingCurr = false;
+
+      // Process new selected bowler
+      const bowler = this.allTeamsSquads.bowlingSquad.find(
+        (item) => item.playerId === this.chooseNewBowler
+      );
+      const selectedBowlerThisMatch =
+        tempActiveMatch.currentInnings.bowler.find(
+          (item) => item.playerId === this.chooseNewBowler
+        );
+      if (selectedBowlerThisMatch) selectedBowlerThisMatch.isBowlingCurr = true;
+      else {
+        const bowlerObj: any = {
+          playerName: bowler.playerName,
+          playerId: bowler.playerId,
+          isBowlingCurr: true,
+          overs: 0.0,
+          ballsThrowed: 0,
+          maidens: 0,
+          runsConceded: 0,
+          wickets: 0,
+          economyRate: '0.0',
+        };
+        tempActiveMatch.currentInnings.bowler.unshift(bowlerObj);
+      }
+
+      // Create new empty over
+      const thisOverNo = this.commonService.ballsToWhichOver(score.totalBalls);
+      const newOver = {
+        overNo: thisOverNo,
+        runsConceded: 0,
+        allBalls: [],
+      };
+      thisOver.push(newOver);
+
+      // Push new changes
+      this.commonService.activeMatch.next(tempActiveMatch);
+      this.commonService.openSuccessSnackbar('Successfully selected!');
+      this.dialogRef.close();
+    } else this.commonService.openFailureSnackbar('Please select a bowler!');
   }
 
   uploadPlayerImg(files: FileList) {

@@ -275,25 +275,27 @@
 <div *ngIf="data.dType == 'next-bowler'">
   <div class="flex justify-between">
     <div class="text-xl">Choose next bowler</div>
-    <button [mat-dialog-close]="false">
-      <mat-icon>close</mat-icon>
-    </button>
   </div>
 
   <div class="w-3/4 flex justify-center items-center m-auto my-4">
-    <mat-form-field class="w-full dialog-input" appearance="outline">
-      <input matInput placeholder="Select next bowler" type="text" />
+    <mat-form-field class="w-full dialog-select" appearance="outline">
+      <mat-select placeholder="Select new Bowler" [(ngModel)]="chooseNewBowler">
+        <mat-option
+          [value]="item?.playerId"
+          *ngFor="let item of allTeamsSquads?.bowlingSquad"
+          >{{ item?.playerName }}</mat-option
+        >
+      </mat-select>
     </mat-form-field>
   </div>
 
   <div class="flex gap-4 justify-end items-center">
     <button
-      [mat-dialog-close]="false"
-      class="px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500"
+      class="bg-[#32cd32] px-5 py-2 rounded text-white"
+      (click)="saveNextBowler()"
     >
-      Cancel
+      Save
     </button>
-    <button class="bg-[#32cd32] px-5 py-2 rounded text-white">Save</button>
   </div>
 </div>
 

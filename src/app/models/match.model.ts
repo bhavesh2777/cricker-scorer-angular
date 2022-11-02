@@ -104,22 +104,26 @@ export enum OutStatus {
 
 export interface BattingElements {
   playerName: string;
+  playerId: number;
   isOnStrike: boolean;
   outStatus: OutStatus;
   runsScored: number;
   ballsPlayed: number;
   fours: number;
   sixes: number;
-  strikeRate: number;
+  strikeRate: string;
 }
 
 export interface BowlingElements {
   playerName: string;
+  playerId: number;
   overs: number;
+  ballsThrowed: number;
+  isBowlingCurr: boolean;
   maidens: number;
   runsConceded: number;
   wickets: number;
-  economyRate: number;
+  economyRate: string;
 }
 
 export enum ExtraRunType {
@@ -170,6 +174,5 @@ export interface ScoreRunDetails {
   runScored: number;
   wideType: boolean;
   noBall: boolean;
-  legByes: boolean;
   wicket: boolean;
 }

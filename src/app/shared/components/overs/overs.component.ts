@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TempMatch } from 'src/app/models/match.model';
 import { CommonService } from 'src/app/services/common.service';
@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./overs.component.css'],
 })
 export class OversComponent implements OnInit {
+  @Input() isActiveMatch: boolean;
   oversArray = [];
   activeMatchSub: Subscription;
 
@@ -18,11 +19,9 @@ export class OversComponent implements OnInit {
     this.activeMatchSub = this.commonService.activeMatch.subscribe(
       (activeMatchObj: TempMatch) => {
         const tempOverArr = activeMatchObj?.currentInnings?.thisOver;
-        // Activate after temp code is done
-        // tempOverArr.sort((a, b) => a.overNo + b.overNo);
-        // console.log('tempOverArr', tempOverArr);
-
-        this.oversArray = tempOverArr;
+        tempOverArr.sort((a, b) => b.overNo - a.overNo);
+        if (this.isActiveMatch) this.oversArray = [tempOverArr[0]];
+        else this.oversArray = tempOverArr;
       }
     );
   }

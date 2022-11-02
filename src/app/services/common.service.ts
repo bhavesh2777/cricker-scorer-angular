@@ -26,6 +26,10 @@ export class CommonService {
     return Math.floor(totalBalls / 6);
   }
 
+  batsmanStrikeRate(runsScored: number, ballsFaced: number) {
+    return ((runsScored / ballsFaced) * 100).toFixed(2);
+  }
+
   openSuccessSnackbar(message = 'Success!') {
     this._snackBar.open(message, '', {
       duration: 3000,

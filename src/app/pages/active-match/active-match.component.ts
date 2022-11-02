@@ -24,9 +24,6 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
   get noBall(): boolean {
     return this.scoreArea.controls['noBall'].value;
   }
-  get legByes(): boolean {
-    return this.scoreArea.controls['legByes'].value;
-  }
   get wicket(): boolean {
     return this.scoreArea.controls['wicket'].value;
   }
@@ -45,7 +42,6 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
     this.scoreArea = new FormGroup({
       wideType: new FormControl(false),
       noBall: new FormControl(false),
-      legByes: new FormControl(false),
       wicket: new FormControl(false),
     });
 
@@ -56,6 +52,7 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
         this.activeMatch?.currentInnings?.bowler.length == 0
       )
         this.chooseOpeningPlayers();
+      this.chooseNextBowler();
     });
   }
 
@@ -64,7 +61,6 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
       runScored,
       wideType: this.wideType,
       noBall: this.noBall,
-      legByes: this.legByes,
       wicket: this.wicket,
     };
     const scoreResult = this.matchService.scoreOneBall(scoreRunObj);
@@ -83,12 +79,18 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
   }
 
   chooseNextBowler() {
-    const dialogRef = this.dialog.open(MatDialogComponent, {
-      data: { dType: 'next-bowler' },
-      panelClass: ['dialog-common', 'forty-to-full-dialog'],
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
+    // choose if eligible to select next bowler
+    const score = this.activeMatch.currentInnings.score;
+    const thisOver = this.activeMatch.currentInnings.thisOver;
+    const thisOverNo = this.commonService.ballsToWhichOver(score.totalBalls);
+    const currOverIndex = thisOver.findIndex((el) => el.overNo === thisOverNo);
+    if (currOverIndex === -1 && thisOver != 0) {
+      const dialogRef = this.dialog.open(MatDialogComponent, {
+        data: { dType: 'next-bowler' },
+        panelClass: ['dialog-common', 'forty-to-full-dialog'],
+      });
+      dialogRef.afterClosed().subscribe((result) => {});
+    }
   }
 
   chooseOpeningPlayers() {
