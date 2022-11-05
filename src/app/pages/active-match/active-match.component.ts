@@ -3,7 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'src/app/services/common.service';
 import { MatDialogComponent } from 'src/app/shared/components/mat-dialog/mat-dialog.component';
 import { Subscription } from 'rxjs';
-import { ScoreRunDetails, TempMatch } from 'src/app/models/match.model';
+import {
+  OutStatus,
+  ScoreRunDetails,
+  TempMatch,
+  BattingElements,
+} from 'src/app/models/match.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatchService } from 'src/app/services/match.service';
 
@@ -53,6 +58,7 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
       )
         this.chooseOpeningPlayers();
       this.chooseNextBowler();
+      this.chooseNextBatsman();
     });
   }
 
@@ -63,9 +69,25 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
       noBall: this.noBall,
       wicket: this.wicket,
     };
+    this.matchService.lastBallObj.next(scoreRunObj);
     const scoreResult = this.matchService.scoreOneBall(scoreRunObj);
     // snackbar result
     if (scoreResult) this.commonService.openSuccessSnackbar('Scored!');
+    else this.commonService.openFailureSnackbar('Failed to score run!');
+  }
+
+  undo1Ball() {
+    const undoRunObj = JSON.parse(
+      JSON.stringify(this.matchService.lastBallObj.value)
+    );
+    this.matchService.lastBallObj.next(null);
+    if (!undoRunObj) {
+      this.commonService.openFailureSnackbar('Nothing to undo!');
+      return false;
+    }
+    const undoResult = this.matchService.undoOneBall(undoRunObj);
+    // snackbar result
+    if (undoResult) this.commonService.openSuccessSnackbar('Scored!');
     else this.commonService.openFailureSnackbar('Failed to score run!');
   }
 
@@ -78,7 +100,7 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
-  chooseNextBowler() {
+  private chooseNextBowler() {
     // choose if eligible to select next bowler
     const score = this.activeMatch.currentInnings.score;
     const thisOver = this.activeMatch.currentInnings.thisOver;
@@ -89,11 +111,30 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
         data: { dType: 'next-bowler' },
         panelClass: ['dialog-common', 'forty-to-full-dialog'],
       });
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+        this.dialog.closeAll();
+      });
     }
   }
 
-  chooseOpeningPlayers() {
+  private chooseNextBatsman() {
+    // choose if eligible to move a batsman below and add new
+    const batsman: BattingElements[] = this.activeMatch.currentInnings.batsman;
+    if (batsman.length != 0) {
+      const notOutArr = batsman.filter(
+        (el) => el.outStatus === OutStatus.NOT_OUT
+      );
+      if (notOutArr.length != 2) {
+        const dialogRef = this.dialog.open(MatDialogComponent, {
+          data: { dType: 'next-batsman' },
+          panelClass: ['dialog-common', 'forty-to-full-dialog'],
+        });
+        dialogRef.afterClosed().subscribe((result) => {});
+      }
+    }
+  }
+
+  private chooseOpeningPlayers() {
     const dialogRef = this.dialog.open(MatDialogComponent, {
       data: { dType: 'choose-opening-players' },
       panelClass: ['dialog-common', 'forty-to-full-dialog'],
@@ -115,15 +156,6 @@ export class ActiveMatchComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MatDialogComponent, {
       data: { dType: 'full-scoreboard' },
       panelClass: ['dialog-common', 'fullscore-dialog-width'],
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
-
-  retireBatsman() {
-    const dialogRef = this.dialog.open(MatDialogComponent, {
-      data: { dType: 'retire-batsman' },
-      panelClass: ['dialog-common', 'forty-to-full-dialog'],
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

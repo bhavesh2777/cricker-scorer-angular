@@ -271,6 +271,37 @@
   </div>
 </div>
 
+<!-- Next-batsman dialog -->
+<div *ngIf="data.dType == 'next-batsman'">
+  <div class="flex justify-between">
+    <div class="text-xl">Choose next batsman</div>
+  </div>
+
+  <div class="w-3/4 flex justify-center items-center m-auto my-4">
+    <mat-form-field class="w-full dialog-select" appearance="outline">
+      <mat-select
+        placeholder="Select new batsman"
+        [(ngModel)]="chooseNewBatsman"
+      >
+        <mat-option
+          [value]="item?.playerId"
+          *ngFor="let item of allTeamsSquads?.battingSquad"
+          >{{ item?.playerName }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="flex gap-4 justify-end items-center">
+    <button
+      class="bg-[#32cd32] px-5 py-2 rounded text-white"
+      (click)="saveNextBatsman()"
+    >
+      Save
+    </button>
+  </div>
+</div>
+
 <!-- Next-bowler dialog -->
 <div *ngIf="data.dType == 'next-bowler'">
   <div class="flex justify-between">
@@ -353,43 +384,6 @@
     >
       Save
     </button>
-  </div>
-</div>
-
-<!-- Retire-batsman dialog -->
-<div *ngIf="data.dType == 'retire-batsman'">
-  <div class="flex justify-between">
-    <div class="text-xl font-medium">Retire batsman?</div>
-    <button [mat-dialog-close]="false">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-
-  <div class="w-3/4 flex flex-col m-auto my-4">
-    <div class="text-base font-medium ml-3 mb-1">Select player to retire</div>
-    <mat-radio-group class="flex flex-col gap-1 ml-3 mb-3 common-input">
-      <mat-radio-button value="1">Player1</mat-radio-button>
-      <mat-radio-button value="2">Player2</mat-radio-button>
-    </mat-radio-group>
-
-    <mat-form-field class="w-full dialog-input" appearance="outline">
-      <input
-        matInput
-        placeholder="Replaced by?"
-        type="text"
-        [(ngModel)]="replacedBatsman"
-      />
-    </mat-form-field>
-  </div>
-
-  <div class="flex gap-4 justify-end items-center">
-    <button
-      [mat-dialog-close]="false"
-      class="px-5 py-2 hover:bg-skin-main-primary rounded ease-out duration-500"
-    >
-      Cancel
-    </button>
-    <button class="bg-[#32cd32] px-5 py-2 rounded text-white">Save</button>
   </div>
 </div>
 

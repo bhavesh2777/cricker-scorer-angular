@@ -4,6 +4,7 @@ import {
   BattingElements,
   BowlingElements,
   FullMatchScore,
+  OutStatus,
   TeamInnings,
   TempMatch,
 } from 'src/app/models/match.model';
@@ -96,8 +97,11 @@ export class ScoreTableComponent implements OnInit, OnDestroy {
     this.activeMatchSub = this.commonService.activeMatch.subscribe(
       (activeMatchObj: TempMatch) => {
         this.currInningScore = activeMatchObj?.currentInnings?.score;
-        this.battingDataSource = activeMatchObj.currentInnings.batsman;
 
+        // Dislay batsman
+        this.battingDataSource = this.selectDisplayBatsman(activeMatchObj);
+
+        // Display Bowler
         const tempBowlerArr = activeMatchObj.currentInnings.bowler;
         let currBowler = tempBowlerArr.find((el) => el.isBowlingCurr === true);
         if (this.isActiveMatch)
@@ -105,6 +109,15 @@ export class ScoreTableComponent implements OnInit, OnDestroy {
         else this.bowlingDataSource = tempBowlerArr;
       }
     );
+  }
+
+  private selectDisplayBatsman(activeMatchObj: TempMatch) {
+    const batsmanArr = activeMatchObj.currentInnings.batsman;
+    const activeBatsman = batsmanArr.filter(
+      (item) => item.outStatus === OutStatus.NOT_OUT
+    );
+    if (this.activeMatchSub) return activeBatsman;
+    return batsmanArr;
   }
 
   ngOnDestroy() {

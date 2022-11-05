@@ -11,23 +11,15 @@
             <mat-checkbox formControlName="noBall">No ball</mat-checkbox>
             <mat-checkbox formControlName="wicket">Wicket</mat-checkbox>
           </div>
-          <div class="flex gap-3 justify-between items-center">
-            <button
-              (click)="retireBatsman()"
-              class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
-            >
-              Retire
-            </button>
-            <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
-              Swap Batsman
-            </button>
-          </div>
         </div>
       </div>
       <div class="bg-white px-5 py-2 shadow-md rounded-md">
         <div class="flex justify-between items-center gap-12">
           <div class="flex flex-col gap-3">
-            <button class="w-full bg-[#32cd32] px-5 py-2 rounded text-white">
+            <button
+              class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
+              (click)="undo1Ball()"
+            >
               Undo
             </button>
             <button
