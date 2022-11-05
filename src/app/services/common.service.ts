@@ -11,6 +11,7 @@ import { Team } from '../models/team.model';
 export class CommonService {
   activeMatch = new BehaviorSubject<TempMatch>(storedCurrMatch);
   allTeamSquad = new BehaviorSubject<Team[]>(storedTeamsArr);
+  closeUnwantedDialog = new BehaviorSubject<boolean>(false);
 
   constructor(private _snackBar: MatSnackBar) {}
 

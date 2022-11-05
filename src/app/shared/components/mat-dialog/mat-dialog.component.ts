@@ -12,6 +12,7 @@ import {
 import { Player } from 'src/app/models/player.model';
 import { Team } from 'src/app/models/team.model';
 import { CommonService } from 'src/app/services/common.service';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-mat-dialog',
@@ -22,7 +23,7 @@ export class MatDialogComponent implements OnInit, OnDestroy {
   enteredPlayerName = '';
   enteredTeamName = '';
   chooseNewBowler = null;
-  replacedBatsman = '';
+  chooseNewBatsman = null;
   playerFile: File | null = null;
   teamFile: File | null = null;
   activeMatchSub: Subscription;
@@ -34,6 +35,7 @@ export class MatDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly commonService: CommonService,
+    private readonly matchService: MatchService,
     public dialogRef: MatDialogRef<MatDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogType
   ) {
@@ -43,7 +45,8 @@ export class MatDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (
       this.data.dType == 'choose-opening-players' ||
-      this.data.dType == 'next-bowler'
+      this.data.dType == 'next-bowler' ||
+      this.data.dType == 'next-batsman'
     ) {
       this.activeMatchSub = this.commonService.activeMatch.subscribe((item) => {
         this.activeMatch = item;
@@ -162,13 +165,13 @@ export class MatDialogComponent implements OnInit, OnDestroy {
     }
     if (this.chooseNewBowler) {
       const tempActiveMatch = { ...this.activeMatch };
+      const batsmanArr = tempActiveMatch.currentInnings.batsman;
+      const bowlerArr = tempActiveMatch.currentInnings.bowler;
       const score = tempActiveMatch.currentInnings.score;
       const thisOver = tempActiveMatch.currentInnings.thisOver;
 
       // Check last over bowler
-      const lastBowler = tempActiveMatch.currentInnings.bowler.find(
-        (item) => item.isBowlingCurr === true
-      );
+      const lastBowler = bowlerArr.find((item) => item.isBowlingCurr === true);
       if (lastBowler.playerId === this.chooseNewBowler) {
         this.commonService.openFailureSnackbar(
           'Please select different bowler from last over!'
@@ -181,10 +184,9 @@ export class MatDialogComponent implements OnInit, OnDestroy {
       const bowler = this.allTeamsSquads.bowlingSquad.find(
         (item) => item.playerId === this.chooseNewBowler
       );
-      const selectedBowlerThisMatch =
-        tempActiveMatch.currentInnings.bowler.find(
-          (item) => item.playerId === this.chooseNewBowler
-        );
+      const selectedBowlerThisMatch = bowlerArr.find(
+        (item) => item.playerId === this.chooseNewBowler
+      );
       if (selectedBowlerThisMatch) selectedBowlerThisMatch.isBowlingCurr = true;
       else {
         const bowlerObj: any = {
@@ -198,7 +200,7 @@ export class MatDialogComponent implements OnInit, OnDestroy {
           wickets: 0,
           economyRate: '0.0',
         };
-        tempActiveMatch.currentInnings.bowler.unshift(bowlerObj);
+        bowlerArr.unshift(bowlerObj);
       }
 
       // Create new empty over
@@ -210,11 +212,64 @@ export class MatDialogComponent implements OnInit, OnDestroy {
       };
       thisOver.push(newOver);
 
+      // Rotate strike
+      this.matchService.rotateStrike(batsmanArr);
+
       // Push new changes
       this.commonService.activeMatch.next(tempActiveMatch);
       this.commonService.openSuccessSnackbar('Successfully selected!');
       this.dialogRef.close();
     } else this.commonService.openFailureSnackbar('Please select a bowler!');
+  }
+
+  saveNextBatsman() {
+    if (!this.allTeamsSquads) {
+      this.commonService.openFailureSnackbar();
+      return null;
+    }
+    if (this.chooseNewBatsman) {
+      const tempActiveMatch = { ...this.activeMatch };
+
+      // Add new player
+      let batsmanArr = tempActiveMatch.currentInnings.batsman;
+      const squadBatsman = this.allTeamsSquads.battingSquad.find(
+        (item) => item.playerId === this.chooseNewBatsman
+      );
+
+      const isAlreadyOut = batsmanArr.findIndex(
+        (item, i) => item.playerId === this.chooseNewBatsman
+      );
+
+      if (isAlreadyOut !== -1) {
+        this.commonService.openFailureSnackbar('Please select a new player!');
+        return null;
+      }
+
+      const isOnStrikeExist = batsmanArr.findIndex(
+        (item) => item.isOnStrike === true
+      );
+
+      const newBatsmanObj: BattingElements = {
+        playerId: squadBatsman.playerId,
+        playerName: squadBatsman.playerName,
+        ballsPlayed: 0,
+        isOnStrike: isOnStrikeExist === -1 ? true : false,
+        fours: 0,
+        outStatus: OutStatus.NOT_OUT,
+        runsScored: 0,
+        sixes: 0,
+        strikeRate: '0.0',
+      };
+      batsmanArr.push(newBatsmanObj);
+
+      // Swap out player with new
+      batsmanArr.sort((a, b) => b.outStatus.length - a.outStatus.length);
+
+      // Push new changes
+      this.commonService.activeMatch.next(tempActiveMatch);
+      this.commonService.openSuccessSnackbar('Successfully selected!');
+      this.dialogRef.close();
+    } else this.commonService.openFailureSnackbar('Please select a batsman!');
   }
 
   uploadPlayerImg(files: FileList) {
