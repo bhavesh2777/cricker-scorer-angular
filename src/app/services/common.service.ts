@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { storedCurrMatch, storedTeamsArr } from '../constants/global';
-import { ExtraRunType, OutStatus, TempMatch } from '../models/match.model';
+import { ExtraRunType, OutStatus, CurrentMatch } from '../models/match.model';
 import { Team } from '../models/team.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
-  activeMatch = new BehaviorSubject<TempMatch>(storedCurrMatch);
+  activeMatch = new BehaviorSubject<CurrentMatch>(storedCurrMatch);
   allTeamSquad = new BehaviorSubject<Team[]>(storedTeamsArr);
   closeUnwantedDialog = new BehaviorSubject<boolean>(false);
 
@@ -29,6 +29,15 @@ export class CommonService {
 
   batsmanStrikeRate(runsScored: number, ballsFaced: number) {
     return ((runsScored / ballsFaced) * 100).toFixed(2);
+  }
+
+  openEndMatchSnackbar(message = 'Match is Over!') {
+    this._snackBar.open(message, '', {
+      duration: 30000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: 'snackbar-failure',
+    });
   }
 
   openSuccessSnackbar(message = 'Success!') {

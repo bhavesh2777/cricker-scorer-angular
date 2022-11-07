@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TempMatch } from 'src/app/models/match.model';
+import { CurrentMatch } from 'src/app/models/match.model';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -17,8 +17,9 @@ export class OversComponent implements OnInit {
 
   ngOnInit() {
     this.activeMatchSub = this.commonService.activeMatch.subscribe(
-      (activeMatchObj: TempMatch) => {
-        const tempOverArr = activeMatchObj?.currentInnings?.thisOver;
+      (activeMatchObj: CurrentMatch) => {
+        const tempCurrentInning = activeMatchObj?.currentInnings[0];
+        const tempOverArr = tempCurrentInning?.thisOver;
         tempOverArr.sort((a, b) => b.overNo - a.overNo);
         if (this.isActiveMatch) this.oversArray = [tempOverArr[0]];
         else this.oversArray = tempOverArr;

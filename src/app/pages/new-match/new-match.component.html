@@ -10,7 +10,7 @@
               placeholder="Select host team"
               formControlName="hostTeam"
             >
-              <mat-option [value]="item.title" *ngFor="let item of teamArr">{{
+              <mat-option [value]="item.teamId" *ngFor="let item of teamArr">{{
                 item.title
               }}</mat-option>
             </mat-select>
@@ -22,7 +22,7 @@
               placeholder="Select visitor team"
               formControlName="visitorTeam"
             >
-              <mat-option [value]="item.title" *ngFor="let item of teamArr">{{
+              <mat-option [value]="item.teamId" *ngFor="let item of teamArr">{{
                 item.title
               }}</mat-option>
             </mat-select>
@@ -35,8 +35,8 @@
           class="flex gap-4 ml-3 common-input"
           formControlName="tossWonBy"
         >
-          <mat-radio-button value="1">Host team</mat-radio-button>
-          <mat-radio-button value="2">Visitor team</mat-radio-button>
+          <mat-radio-button value="HOST">Host team</mat-radio-button>
+          <mat-radio-button value="VISITOR">Visitor team</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="bg-white px-5 py-2 shadow-md rounded-md">
@@ -45,8 +45,8 @@
           class="flex gap-4 ml-3 common-input"
           formControlName="optedTo"
         >
-          <mat-radio-button value="1">Bat</mat-radio-button>
-          <mat-radio-button value="2">Bowl</mat-radio-button>
+          <mat-radio-button value="BAT">Bat</mat-radio-button>
+          <mat-radio-button value="BOWL">Bowl</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="bg-white px-5 py-2 shadow-md rounded-md">

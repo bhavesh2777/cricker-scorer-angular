@@ -3,10 +3,9 @@ import { Subscription } from 'rxjs';
 import {
   BattingElements,
   BowlingElements,
-  FullMatchScore,
   OutStatus,
-  TeamInnings,
-  TempMatch,
+  CurrentMatch,
+  OneInning,
 } from 'src/app/models/match.model';
 import { CommonService } from 'src/app/services/common.service';
 
@@ -95,14 +94,15 @@ export class ScoreTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activeMatchSub = this.commonService.activeMatch.subscribe(
-      (activeMatchObj: TempMatch) => {
-        this.currInningScore = activeMatchObj?.currentInnings?.score;
+      (activeMatchObj: CurrentMatch) => {
+        const tempCurrentInning = activeMatchObj.currentInnings[0];
+        this.currInningScore = tempCurrentInning?.score;
 
         // Dislay batsman
-        this.battingDataSource = this.selectDisplayBatsman(activeMatchObj);
+        this.battingDataSource = this.selectDisplayBatsman(tempCurrentInning);
 
         // Display Bowler
-        const tempBowlerArr = activeMatchObj.currentInnings.bowler;
+        const tempBowlerArr = tempCurrentInning.bowler;
         let currBowler = tempBowlerArr.find((el) => el.isBowlingCurr === true);
         if (this.isActiveMatch)
           this.bowlingDataSource = currBowler ? [currBowler] : [];
@@ -111,8 +111,8 @@ export class ScoreTableComponent implements OnInit, OnDestroy {
     );
   }
 
-  private selectDisplayBatsman(activeMatchObj: TempMatch) {
-    const batsmanArr = activeMatchObj.currentInnings.batsman;
+  private selectDisplayBatsman(tempCurrentInning: OneInning) {
+    const batsmanArr = tempCurrentInning.batsman;
     const activeBatsman = batsmanArr.filter(
       (item) => item.outStatus === OutStatus.NOT_OUT
     );

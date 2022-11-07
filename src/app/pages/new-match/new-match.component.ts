@@ -2,14 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { storedTeamsArr } from 'src/app/constants/global';
-import {
-  AdvancedSettings,
-  ExtraRuns,
-  FullMatchScore,
-  MatchStatusType,
-  OptedTypeEnum,
-  TeamInnings,
-} from 'src/app/models/match.model';
+import { AdvancedSettings, CurrentMatch } from 'src/app/models/match.model';
 import { Team } from 'src/app/models/team.model';
 import { CommonService } from 'src/app/services/common.service';
 
@@ -30,15 +23,15 @@ export class NewMatchComponent implements OnInit {
   ngOnInit() {
     this.teamArr = storedTeamsArr;
     this.newMatch = new FormGroup({
-      hostTeam: new FormControl(this.teamArr[0].title, {
+      hostTeam: new FormControl(this.teamArr[0].teamId, {
         validators: Validators.required,
       }),
-      visitorTeam: new FormControl(this.teamArr[1].title, {
+      visitorTeam: new FormControl(this.teamArr[1].teamId, {
         validators: Validators.required,
       }),
-      tossWonBy: new FormControl('2', { validators: Validators.required }),
-      optedTo: new FormControl('2', { validators: Validators.required }),
-      matchOvers: new FormControl(11, {
+      tossWonBy: new FormControl('HOST', { validators: Validators.required }),
+      optedTo: new FormControl('BAT', { validators: Validators.required }),
+      matchOvers: new FormControl(10, {
         validators: [
           Validators.required,
           Validators.pattern(/^[0-9]\d*$/),
@@ -50,78 +43,58 @@ export class NewMatchComponent implements OnInit {
 
   submitStartMatch() {
     if (this.newMatch?.valid) {
-      const hostTeam = this.newMatch.controls['hostTeam'].value;
-      const visitorTeam = this.newMatch.controls['visitorTeam'].value;
+      const hostTeamId = this.newMatch.controls['hostTeam'].value;
+      const visitorTeamId = this.newMatch.controls['visitorTeam'].value;
       const tossWonBy = this.newMatch.controls['tossWonBy'].value;
       const optedTo = this.newMatch.controls['optedTo'].value;
       const matchOvers = this.newMatch.controls['matchOvers'].value;
 
-      let batFirstTeam = 'HOST';
+      // Decide toss outcome
+      let hostTeamName = '';
+      let visitorTeamName = '';
+      this.teamArr.forEach((item) => {
+        if (item.teamId == hostTeamId) hostTeamName = item.title;
+        if (item.teamId == visitorTeamId) visitorTeamName = item.title;
+      });
+
+      const batFirstTeam = { id: hostTeamId, name: hostTeamName };
       if (
-        (tossWonBy == '1' && optedTo == '2') ||
-        (tossWonBy == '2' && optedTo == '1')
+        (tossWonBy == 1 && optedTo == 'BOWL') ||
+        (tossWonBy == 2 && optedTo == 'BAT')
       ) {
-        batFirstTeam = 'VISITOR';
+        batFirstTeam.id = visitorTeamId;
+        batFirstTeam.name = visitorTeamName;
       }
 
-      // const newMatchObj: Match = {
-      //   matchId: 1,
-      //   hostTeam: 'Team A',
-      //   visitorTeam: 'Team B',
-      //   tossWonBy: 'Team A',
-      //   matchOvers: 11,
-      //   optedTo: OptedTypeEnum.Bat,
-      //   matchStatus: MatchStatusType.Active,
-      //   firstInningsTeam: 'Team A',
-      //   secondInningsTeam: 'Team B',
-      //   fullMatchScore: {
-      //     hostTeamInnings: {
-      //       teamDetails: {
-      //         teamId: 1,
-      //         title: 'Team A',
-      //         matchesLost: 0,
-      //         matchesWon: 0,
-      //         teamSquad: [
-      //           'Player 1',
-      //           'Player 2',
-      //           'Player 3',
-      //           'Player 4',
-      //           'Player 5',
-      //         ],
-      //       },
-      //       extraRuns: { legByRuns: 0, noballRuns: 0, wideRuns: 0 },
-      //       currentRunRate: 0,
-      //       isInningsOver: false,
-      //       oversPlayed: 0,
-      //       totalRuns: 0,
-      //       matchAllOvers: [],
-      //     },
-      //     visitorTeamInnings: {
-      //       teamDetails: {
-      //         teamId: 1,
-      //         title: 'Team A',
-      //         matchesLost: 0,
-      //         matchesWon: 0,
-      //         teamSquad: [
-      //           'Player 1',
-      //           'Player 2',
-      //           'Player 3',
-      //           'Player 4',
-      //           'Player 5',
-      //         ],
-      //       },
-      //       currentRunRate: 0,
-      //       extraRuns: { legByRuns: 0, noballRuns: 0, wideRuns: 0 },
-      //       isInningsOver: false,
-      //       oversPlayed: 0,
-      //       totalRuns: 0,
-      //       matchAllOvers: [],
-      //     },
-      //   },
-      //   advancedSettings: new AdvancedSettings(),
-      // };
-      // this.commonService.activeMatchObj.next(newMatchObj);
-      // this.router.navigate(['/active-match']);
+      // Push the new match
+      const newMatchObj: CurrentMatch = {
+        hostTeamId: hostTeamId,
+        visitorTeamId: visitorTeamId,
+        hostTeam: hostTeamName,
+        visitorTeam: visitorTeamName,
+        optedTo: optedTo,
+        tossWonBy: tossWonBy,
+        matchOvers: matchOvers,
+        currentInnings: [
+          {
+            teamId: batFirstTeam.id,
+            teamName: batFirstTeam.name,
+            inningNo: 1,
+            score: {
+              totalRuns: 0,
+              totalWickets: 0,
+              totalBalls: 0,
+              currRunrate: (0.0).toFixed(2),
+              extraRuns: { wide: 0, noBall: 0 },
+            },
+            thisOver: [],
+            batsman: [],
+            bowler: [],
+          },
+        ],
+      };
+      this.commonService.activeMatch.next(newMatchObj);
+      this.router.navigate(['/active-match']);
     }
   }
 }
