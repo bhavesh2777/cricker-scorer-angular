@@ -1,13 +1,13 @@
 import { Team } from './team.model';
 
-export enum OptedTypeEnum {
-  Bat = 'Bat',
-  Bowl = 'Bowl',
-}
-export enum MatchStatusType {
-  Active = 'Active',
-  Inactive = 'Inactive',
-}
+// export enum OptedTypeEnum {
+//   Bat = 'Bat',
+//   Bowl = 'Bowl',
+// }
+// export enum MatchStatusType {
+//   Active = 'Active',
+//   Inactive = 'Inactive',
+// }
 
 export class AdvancedSettings {
   static playersPerTeam = 11;
@@ -29,71 +29,52 @@ export class AdvancedSettings {
   ) {}
 }
 
-export class OneBall {
-  constructor(
-    public strikeBatsman: string,
-    public nonStrikeBatsman: string,
-    public runsConceded: number,
-    public isWideBall: boolean,
-    public isNoBall: boolean,
-    public isLegBy: boolean,
-    public isBatsmanOut: boolean
-  ) {}
-}
-
-export class OneOver {
-  constructor(
-    public bowlerName: string,
-    public totalRunsConceded: number,
-    public totalWickets: number,
-    public totalBalls: number,
-    public sixBalls: OneBall[]
-  ) {}
-}
-
-export class ExtraRuns {
-  constructor(
-    public wideRuns: number,
-    public noballRuns: number,
-    public legByRuns: number
-  ) {}
-}
-
-export class TeamInnings {
-  constructor(
-    public totalRuns: number,
-    public oversPlayed: number,
-    public isInningsOver: boolean,
-    public currentRunRate: number,
-    public extraRuns: ExtraRuns,
-    public teamDetails: Team,
-    public matchAllOvers: OneOver[]
-  ) {}
-}
-
-export class FullMatchScore {
-  constructor(
-    public hostTeamInnings: TeamInnings,
-    public visitorTeamInnings: TeamInnings
-  ) {}
-}
-
-// export class Match {
-//   static maxMatchOvers = 50;
-//   static minMatchOvers = 1;
-
+// export class OneBall {
 //   constructor(
-//     public matchId: number,
-//     public hostTeam: string,
-//     public visitorTeam: string,
-//     public tossWonBy: string,
-//     public matchOvers: number,
-//     public firstInningsTeam: string,
-//     public secondInningsTeam: string,
-//     public optedTo: OptedTypeEnum,
-//     public matchStatus: MatchStatusType,
-//     public fullMatchScore: FullMatchScore,
-//     public advancedSettings: AdvancedSettings
+//     public strikeBatsman: string,
+//     public nonStrikeBatsman: string,
+//     public runsConceded: number,
+//     public isWideBall: boolean,
+//     public isNoBall: boolean,
+//     public isLegBy: boolean,
+//     public isBatsmanOut: boolean
+//   ) {}
+// }
+
+// export class OneOver {
+//   constructor(
+//     public bowlerName: string,
+//     public totalRunsConceded: number,
+//     public totalWickets: number,
+//     public totalBalls: number,
+//     public sixBalls: OneBall[]
+//   ) {}
+// }
+
+// export class ExtraRuns {
+//   constructor(
+//     public wideRuns: number,
+//     public noballRuns: number,
+//     public legByRuns: number
+//   ) {}
+// }
+
+// export class TeamInnings {
+//   constructor(
+//     public totalRuns: number,
+//     public oversPlayed: number,
+//     public isInningsOver: boolean,
+//     public currentRunRate: number,
+//     public extraRuns: ExtraRuns,
+//     public teamDetails: Team,
+//     public matchAllOvers: OneOver[]
+//   ) {}
+// }
+
+// export class FullMatchScore {
+//   constructor(
+//     public hostTeamInnings: TeamInnings,
+//     public visitorTeamInnings: TeamInnings
 //   ) {}
 // }
 
@@ -142,31 +123,46 @@ export class OneBallElement {
   ) {}
 }
 
-export class TempMatch {
+export class CurrentMatch {
   constructor(
     public hostTeamId: number,
     public visitorTeamId: number,
     public hostTeam: string,
     public visitorTeam: string,
-    public currentInnings: {
-      teamId: number;
-      teamName: string;
-      inningNo: number;
-      score: {
-        totalRuns: number;
-        totalWickets: number;
-        totalBalls: number;
-        currRunrate: string;
-        extraRuns: { wide: number; noBall: number };
-      };
-      batsman: BattingElements[];
-      bowler: BowlingElements[];
-      thisOver: {
-        overNo: number;
-        runsConceded: number;
-        allBalls: OneBallElement[];
-      }[];
-    }
+    public optedTo: string,
+    public tossWonBy: number,
+    public matchOvers: number,
+    public currentInnings: OneInning[]
+  ) {}
+}
+
+export class OneInning {
+  constructor(
+    public teamId: number,
+    public teamName: string,
+    public inningNo: number,
+    public score: CurrentInningsScore,
+    public batsman: BattingElements[],
+    public bowler: BowlingElements[],
+    public thisOver: OneOver[]
+  ) {}
+}
+
+export class CurrentInningsScore {
+  constructor(
+    public totalRuns: number,
+    public totalWickets: number,
+    public totalBalls: number,
+    public currRunrate: string,
+    public extraRuns: { wide: number; noBall: number }
+  ) {}
+}
+
+export class OneOver {
+  constructor(
+    public overNo: number,
+    public runsConceded: number,
+    public allBalls: OneBallElement[]
   ) {}
 }
 

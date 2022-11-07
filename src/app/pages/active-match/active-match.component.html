@@ -19,6 +19,7 @@
             <button
               class="w-full bg-[#32cd32] px-5 py-2 rounded text-white"
               (click)="undo1Ball()"
+              [disabled]="isMatchOver"
             >
               Undo
             </button>
@@ -31,6 +32,7 @@
           </div>
           <div class="flex flex-wrap gap-1">
             <button
+              [disabled]="isMatchOver"
               class="run-score-num"
               (click)="scoreRuns(runItem)"
               *ngFor="let runItem of runList"
@@ -69,19 +71,19 @@
       <div class="flex gap-5 ml-3">
         <div class="w-full font-medium flex flex-col justify-between gap-2">
           <div class="w-max">
-            {{ activeMatch?.currentInnings?.teamName }},
-            {{ activeMatch?.currentInnings?.inningNo | ordinal }} inning
+            {{ currentInning?.teamName }},
+            {{ currentInning?.inningNo | ordinal }} inning
           </div>
           <div class="w-max text-2xl">
-            {{ activeMatch?.currentInnings?.score?.totalRuns }}-{{
-              activeMatch?.currentInnings?.score?.totalWickets
+            {{ currentInning?.score?.totalRuns }}-{{
+              currentInning?.score?.totalWickets
             }}
             ({{ totalOvers }})
           </div>
         </div>
         <div class="w-full font-medium flex flex-col justify-between">
           <div>CRR</div>
-          <div>{{ activeMatch?.currentInnings?.score?.currRunrate }}</div>
+          <div>{{ currentInning?.score?.currRunrate }}</div>
         </div>
       </div>
     </div>

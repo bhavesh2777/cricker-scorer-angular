@@ -7,7 +7,8 @@ import {
   BattingElements,
   BowlingElements,
   OutStatus,
-  TempMatch,
+  CurrentMatch,
+  OneInning,
 } from 'src/app/models/match.model';
 import { Player } from 'src/app/models/player.model';
 import { Team } from 'src/app/models/team.model';
@@ -28,7 +29,8 @@ export class MatDialogComponent implements OnInit, OnDestroy {
   teamFile: File | null = null;
   activeMatchSub: Subscription;
   allTeamSquadSub: Subscription;
-  activeMatch: TempMatch;
+  activeMatch: CurrentMatch;
+  currentInning: OneInning;
 
   openingPlayerForm: FormGroup;
   allTeamsSquads: { battingSquad: Player[]; bowlingSquad: Player[] };
@@ -50,6 +52,7 @@ export class MatDialogComponent implements OnInit, OnDestroy {
     ) {
       this.activeMatchSub = this.commonService.activeMatch.subscribe((item) => {
         this.activeMatch = item;
+        this.currentInning = item.currentInnings[0];
         const tempAllSquad = this.commonService.allTeamSquad.value;
         this.allTeamsSquads = this.getCurrentSquads(
           tempAllSquad,
@@ -71,18 +74,18 @@ export class MatDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCurrentSquads(allSquads: Team[], activeMatch: TempMatch) {
+  getCurrentSquads(allSquads: Team[], activeMatch: CurrentMatch) {
     let battingSquad: Player[] = [];
     let bowlingSquad: Player[] = [];
 
     allSquads.forEach((item) => {
       if (activeMatch.hostTeamId == item.teamId) {
-        if (activeMatch.currentInnings.teamId == activeMatch.hostTeamId)
+        if (this.currentInning.teamId == activeMatch.hostTeamId)
           battingSquad = item.teamSquad;
         else bowlingSquad = item.teamSquad;
       }
       if (activeMatch.visitorTeamId == item.teamId) {
-        if (activeMatch.currentInnings.teamId == activeMatch.visitorTeamId)
+        if (this.currentInning.teamId == activeMatch.visitorTeamId)
           battingSquad = item.teamSquad;
         else bowlingSquad = item.teamSquad;
       }
@@ -104,6 +107,7 @@ export class MatDialogComponent implements OnInit, OnDestroy {
         return null;
       }
       const tempActiveMatch = { ...this.activeMatch };
+      const tempCurrentInning = tempActiveMatch.currentInnings[0];
       const strikeBatsman = this.allTeamsSquads.battingSquad.find(
         (item) => item.playerId === strikeBatsmanId
       );
@@ -147,11 +151,8 @@ export class MatDialogComponent implements OnInit, OnDestroy {
         wickets: 0,
         economyRate: '0.0',
       };
-      tempActiveMatch.currentInnings.batsman = [
-        strikeBatsmanObj,
-        nonStrikeBatsmanObj,
-      ];
-      tempActiveMatch.currentInnings.bowler = [bowlerObj];
+      tempCurrentInning.batsman = [strikeBatsmanObj, nonStrikeBatsmanObj];
+      tempCurrentInning.bowler = [bowlerObj];
       this.commonService.activeMatch.next(tempActiveMatch);
       this.commonService.openSuccessSnackbar('Successfully selected!');
       this.dialogRef.close();
@@ -165,10 +166,11 @@ export class MatDialogComponent implements OnInit, OnDestroy {
     }
     if (this.chooseNewBowler) {
       const tempActiveMatch = { ...this.activeMatch };
-      const batsmanArr = tempActiveMatch.currentInnings.batsman;
-      const bowlerArr = tempActiveMatch.currentInnings.bowler;
-      const score = tempActiveMatch.currentInnings.score;
-      const thisOver = tempActiveMatch.currentInnings.thisOver;
+      const tempCurrentInning = tempActiveMatch.currentInnings[0];
+      const batsmanArr = tempCurrentInning.batsman;
+      const bowlerArr = tempCurrentInning.bowler;
+      const score = tempCurrentInning.score;
+      const thisOver = tempCurrentInning.thisOver;
 
       // Check last over bowler
       const lastBowler = bowlerArr.find((item) => item.isBowlingCurr === true);
@@ -229,9 +231,9 @@ export class MatDialogComponent implements OnInit, OnDestroy {
     }
     if (this.chooseNewBatsman) {
       const tempActiveMatch = { ...this.activeMatch };
-
+      const tempCurrentInning = tempActiveMatch.currentInnings[0];
       // Add new player
-      let batsmanArr = tempActiveMatch.currentInnings.batsman;
+      let batsmanArr = tempCurrentInning.batsman;
       const squadBatsman = this.allTeamsSquads.battingSquad.find(
         (item) => item.playerId === this.chooseNewBatsman
       );

@@ -5,7 +5,9 @@ import {
   OneBallElement,
   OutStatus,
   ScoreRunDetails,
-  TempMatch,
+  CurrentMatch,
+  OneInning,
+  OneOver,
 } from '../models/match.model';
 import { CommonService } from './common.service';
 import { BehaviorSubject } from 'rxjs';
@@ -20,12 +22,13 @@ export class MatchService {
 
   scoreOneBall(scoreRunObj: ScoreRunDetails) {
     // Make all the changes on object
-    const tempActiveMatch = JSON.parse(
+    const tempActiveMatch: CurrentMatch = JSON.parse(
       JSON.stringify(this.commonService.activeMatch.value)
     );
+    const tempCurrentInning = tempActiveMatch.currentInnings[0];
 
-    const score = tempActiveMatch.currentInnings.score;
-    const thisOver = tempActiveMatch.currentInnings.thisOver;
+    const score = tempCurrentInning.score;
+    const thisOver = tempCurrentInning.thisOver;
     const tempTotalBalls = score.totalBalls;
     // Update general score object
     const isValidBall = !scoreRunObj.noBall && !scoreRunObj.wideType;
@@ -73,11 +76,11 @@ export class MatchService {
     }
 
     // Update Batsman
-    this.updateScoreBatsman(tempActiveMatch, scoreRunObj, isValidBall);
+    this.updateScoreBatsman(tempCurrentInning, scoreRunObj, isValidBall);
 
     // Update Bowler
     this.updateScoreBowler(
-      tempActiveMatch,
+      tempCurrentInning,
       scoreRunObj,
       isValidBall,
       currOverIndex
@@ -91,13 +94,43 @@ export class MatchService {
     return true;
   }
 
+  addNewInnings(tempActiveMatch: CurrentMatch) {
+    const currentInningTeamId = tempActiveMatch.currentInnings[0].teamId;
+    const newInningTeam = {
+      id: tempActiveMatch.hostTeamId,
+      name: tempActiveMatch.hostTeam,
+    };
+    if (currentInningTeamId === tempActiveMatch.hostTeamId) {
+      newInningTeam.id = tempActiveMatch.visitorTeamId;
+      newInningTeam.name = tempActiveMatch.visitorTeam;
+    }
+    const newInningsObj: OneInning = {
+      teamId: newInningTeam.id,
+      teamName: newInningTeam.name,
+      inningNo: 2,
+      score: {
+        totalRuns: 0,
+        totalWickets: 0,
+        totalBalls: 0,
+        currRunrate: (0.0).toFixed(2),
+        extraRuns: { wide: 0, noBall: 0 },
+      },
+      thisOver: [],
+      batsman: [],
+      bowler: [],
+    };
+    tempActiveMatch.currentInnings.unshift(newInningsObj);
+    this.commonService.activeMatch.next(tempActiveMatch);
+  }
+
   undoOneBall(undoRunObj: ScoreRunDetails) {
     // Make all the changes on object
-    const tempActiveMatch = JSON.parse(
+    const tempActiveMatch: CurrentMatch = JSON.parse(
       JSON.stringify(this.commonService.activeMatch.value)
     );
-    const score = tempActiveMatch.currentInnings.score;
-    const thisOver = tempActiveMatch.currentInnings.thisOver;
+    const tempCurrentInning = tempActiveMatch.currentInnings[0];
+    const score = tempCurrentInning.score;
+    const thisOver = tempCurrentInning.thisOver;
 
     // Update general score object
     const isValidBall = !undoRunObj.noBall && !undoRunObj.wideType;
@@ -130,7 +163,7 @@ export class MatchService {
 
     // Update Batsman
     this.updateUndoBatsman(
-      tempActiveMatch,
+      tempCurrentInning,
       undoRunObj,
       isValidBall,
       isNewEmptyOver
@@ -138,7 +171,7 @@ export class MatchService {
 
     // Update Bowler
     this.updateUndoBowler(
-      tempActiveMatch,
+      tempCurrentInning,
       undoRunObj,
       isValidBall,
       isNewEmptyOver
@@ -159,11 +192,11 @@ export class MatchService {
 
   // Update batsman
   private updateScoreBatsman(
-    tempActiveMatch: TempMatch,
+    tempCurrentInning: OneInning,
     scoreRunObj: ScoreRunDetails,
     isValidBall: boolean
   ) {
-    const batsman = tempActiveMatch.currentInnings.batsman;
+    const batsman = tempCurrentInning.batsman;
     const onStrikeBatsman = batsman.find(
       (el) => el.isOnStrike === true && el.outStatus === OutStatus.NOT_OUT
     );
@@ -186,12 +219,12 @@ export class MatchService {
   }
 
   private updateUndoBatsman(
-    tempActiveMatch: TempMatch,
+    tempCurrentInning: OneInning,
     undoRunObj: ScoreRunDetails,
     isValidBall: boolean,
     isNewEmptyOver: boolean
   ) {
-    const batsman = tempActiveMatch.currentInnings.batsman;
+    const batsman = tempCurrentInning.batsman;
 
     // Rotate strike as previous
     if (isNewEmptyOver) this.rotateStrike(batsman);
@@ -226,13 +259,13 @@ export class MatchService {
 
   // Update Bowler
   private updateScoreBowler(
-    tempActiveMatch: TempMatch,
+    tempCurrentInning: OneInning,
     scoreRunObj: ScoreRunDetails,
     isValidBall: boolean,
     currOverIndex: number
   ) {
-    const bowler = tempActiveMatch.currentInnings.bowler;
-    const thisOver = tempActiveMatch.currentInnings.thisOver;
+    const bowler = tempCurrentInning.bowler;
+    const thisOver = tempCurrentInning.thisOver;
     const currentBowler = bowler.find((el) => el.isBowlingCurr === true);
     if (currentBowler) {
       if (isValidBall) {
@@ -258,12 +291,12 @@ export class MatchService {
   }
 
   private updateUndoBowler(
-    tempActiveMatch: TempMatch,
+    tempCurrentInning: OneInning,
     scoreRunObj: ScoreRunDetails,
     isValidBall: boolean,
     isNewEmptyOver: boolean
   ) {
-    const bowler = tempActiveMatch.currentInnings.bowler;
+    const bowler = tempCurrentInning.bowler;
     if (isNewEmptyOver) {
       bowler.shift();
       bowler[0].isBowlingCurr = true;
